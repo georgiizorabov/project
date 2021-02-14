@@ -63,6 +63,7 @@ int main() {
               << "go$ha - do gosha\n"
               << "exit - exit\n"
               << "hello - greet you\n"
+              << "sus - print emoji\n"
               << "============\n > ";
     while (std::cin >> cmd){
         if (cmd == "exit"){
