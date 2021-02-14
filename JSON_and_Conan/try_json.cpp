@@ -115,6 +115,10 @@ int main() {
             std::cout << "___________----------__________--------__________-----------____________----------";
             continue;
         }
+        if (cmd == "sus"){
+            std::cout << "^_^" << '\n';
+            continue;
+        }
         std::cout << "command not found(\n> ";
     }
     return 0;
