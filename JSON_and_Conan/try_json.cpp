@@ -61,6 +61,7 @@ int main() {
               << "make - make new ToDo \n"
               << "show - show this json\n"
               << "exit - exit\n"
+              << "hello - greet you\n"
               << "============\n > ";
     while (std::cin >> cmd){
         if (cmd == "exit"){
@@ -99,6 +100,14 @@ int main() {
         }
         if (cmd == "make"){
             make_new_to_do(j);
+            std::cout << "> ";
+            continue;
+        }
+        if (cmd == "hello"){
+            std::string name;
+            std::cout << "print your name > ";
+            std::cin >> name;
+            std::cout << "Hello, " << name << "\n";
             std::cout << "> ";
             continue;
         }

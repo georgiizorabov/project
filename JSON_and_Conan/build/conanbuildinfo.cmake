@@ -38,17 +38,17 @@ endmacro()
 #################
 ###  POCO
 #################
-set(CONAN_POCO_ROOT "/home/slawa4s/.conan/data/poco/1.9.4/_/_/package/8b4490bc851e1c66c0a44d9243069c16449ee2db")
-set(CONAN_INCLUDE_DIRS_POCO "/home/slawa4s/.conan/data/poco/1.9.4/_/_/package/8b4490bc851e1c66c0a44d9243069c16449ee2db/include")
-set(CONAN_LIB_DIRS_POCO "/home/slawa4s/.conan/data/poco/1.9.4/_/_/package/8b4490bc851e1c66c0a44d9243069c16449ee2db/lib")
+set(CONAN_POCO_ROOT "/Users/vitalypavlenko/.conan/data/poco/1.9.4/_/_/package/40e6b5f4ead7d44df63e44dbb811268cbc705acb")
+set(CONAN_INCLUDE_DIRS_POCO "/Users/vitalypavlenko/.conan/data/poco/1.9.4/_/_/package/40e6b5f4ead7d44df63e44dbb811268cbc705acb/include")
+set(CONAN_LIB_DIRS_POCO "/Users/vitalypavlenko/.conan/data/poco/1.9.4/_/_/package/40e6b5f4ead7d44df63e44dbb811268cbc705acb/lib")
 set(CONAN_BIN_DIRS_POCO )
 set(CONAN_RES_DIRS_POCO )
 set(CONAN_SRC_DIRS_POCO )
-set(CONAN_BUILD_DIRS_POCO "/home/slawa4s/.conan/data/poco/1.9.4/_/_/package/8b4490bc851e1c66c0a44d9243069c16449ee2db/")
+set(CONAN_BUILD_DIRS_POCO "/Users/vitalypavlenko/.conan/data/poco/1.9.4/_/_/package/40e6b5f4ead7d44df63e44dbb811268cbc705acb/")
 set(CONAN_FRAMEWORK_DIRS_POCO )
-set(CONAN_LIBS_POCO PocoZip PocoNetSSL PocoRedis PocoUtil PocoMongoDB PocoDataSQLite PocoNet PocoData PocoEncodings PocoXML PocoCrypto PocoJSON PocoFoundation)
-set(CONAN_PKG_LIBS_POCO PocoZip PocoNetSSL PocoRedis PocoUtil PocoMongoDB PocoDataSQLite PocoNet PocoData PocoEncodings PocoXML PocoCrypto PocoJSON PocoFoundation)
-set(CONAN_SYSTEM_LIBS_POCO pthread dl rt)
+set(CONAN_LIBS_POCO PocoZip PocoNetSSL PocoMongoDB PocoDataSQLite PocoRedis PocoUtil PocoNet PocoData PocoEncodings PocoJSON PocoCrypto PocoXML PocoFoundation)
+set(CONAN_PKG_LIBS_POCO PocoZip PocoNetSSL PocoMongoDB PocoDataSQLite PocoRedis PocoUtil PocoNet PocoData PocoEncodings PocoJSON PocoCrypto PocoXML PocoFoundation)
+set(CONAN_SYSTEM_LIBS_POCO )
 set(CONAN_FRAMEWORKS_POCO )
 set(CONAN_FRAMEWORKS_FOUND_POCO "")  # Will be filled later
 set(CONAN_DEFINES_POCO "-DPOCO_STATIC=ON")
@@ -76,13 +76,13 @@ set(CONAN_LIBS_POCO ${CONAN_PKG_LIBS_POCO} ${CONAN_SYSTEM_LIBS_POCO} ${CONAN_FRA
 #################
 ###  NLOHMANN_JSON
 #################
-set(CONAN_NLOHMANN_JSON_ROOT "/home/slawa4s/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508")
-set(CONAN_INCLUDE_DIRS_NLOHMANN_JSON "/home/slawa4s/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508/include")
+set(CONAN_NLOHMANN_JSON_ROOT "/Users/vitalypavlenko/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508")
+set(CONAN_INCLUDE_DIRS_NLOHMANN_JSON "/Users/vitalypavlenko/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508/include")
 set(CONAN_LIB_DIRS_NLOHMANN_JSON )
 set(CONAN_BIN_DIRS_NLOHMANN_JSON )
 set(CONAN_RES_DIRS_NLOHMANN_JSON )
 set(CONAN_SRC_DIRS_NLOHMANN_JSON )
-set(CONAN_BUILD_DIRS_NLOHMANN_JSON "/home/slawa4s/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508/")
+set(CONAN_BUILD_DIRS_NLOHMANN_JSON "/Users/vitalypavlenko/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508/")
 set(CONAN_FRAMEWORK_DIRS_NLOHMANN_JSON )
 set(CONAN_LIBS_NLOHMANN_JSON )
 set(CONAN_PKG_LIBS_NLOHMANN_JSON )
@@ -114,13 +114,13 @@ set(CONAN_LIBS_NLOHMANN_JSON ${CONAN_PKG_LIBS_NLOHMANN_JSON} ${CONAN_SYSTEM_LIBS
 #################
 ###  PCRE
 #################
-set(CONAN_PCRE_ROOT "/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80")
-set(CONAN_INCLUDE_DIRS_PCRE "/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80/include")
-set(CONAN_LIB_DIRS_PCRE "/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80/lib")
-set(CONAN_BIN_DIRS_PCRE "/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80/bin")
+set(CONAN_PCRE_ROOT "/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec")
+set(CONAN_INCLUDE_DIRS_PCRE "/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec/include")
+set(CONAN_LIB_DIRS_PCRE "/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec/lib")
+set(CONAN_BIN_DIRS_PCRE "/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec/bin")
 set(CONAN_RES_DIRS_PCRE )
 set(CONAN_SRC_DIRS_PCRE )
-set(CONAN_BUILD_DIRS_PCRE "/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80/")
+set(CONAN_BUILD_DIRS_PCRE "/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec/")
 set(CONAN_FRAMEWORK_DIRS_PCRE )
 set(CONAN_LIBS_PCRE pcreposix pcre pcre16 pcre32)
 set(CONAN_PKG_LIBS_PCRE pcreposix pcre pcre16 pcre32)
@@ -152,13 +152,13 @@ set(CONAN_LIBS_PCRE ${CONAN_PKG_LIBS_PCRE} ${CONAN_SYSTEM_LIBS_PCRE} ${CONAN_FRA
 #################
 ###  EXPAT
 #################
-set(CONAN_EXPAT_ROOT "/home/slawa4s/.conan/data/expat/2.2.10/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709")
-set(CONAN_INCLUDE_DIRS_EXPAT "/home/slawa4s/.conan/data/expat/2.2.10/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include")
-set(CONAN_LIB_DIRS_EXPAT "/home/slawa4s/.conan/data/expat/2.2.10/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/lib")
+set(CONAN_EXPAT_ROOT "/Users/vitalypavlenko/.conan/data/expat/2.2.10/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47")
+set(CONAN_INCLUDE_DIRS_EXPAT "/Users/vitalypavlenko/.conan/data/expat/2.2.10/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/include")
+set(CONAN_LIB_DIRS_EXPAT "/Users/vitalypavlenko/.conan/data/expat/2.2.10/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/lib")
 set(CONAN_BIN_DIRS_EXPAT )
 set(CONAN_RES_DIRS_EXPAT )
 set(CONAN_SRC_DIRS_EXPAT )
-set(CONAN_BUILD_DIRS_EXPAT "/home/slawa4s/.conan/data/expat/2.2.10/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/")
+set(CONAN_BUILD_DIRS_EXPAT "/Users/vitalypavlenko/.conan/data/expat/2.2.10/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/")
 set(CONAN_FRAMEWORK_DIRS_EXPAT )
 set(CONAN_LIBS_EXPAT expat)
 set(CONAN_PKG_LIBS_EXPAT expat)
@@ -190,17 +190,17 @@ set(CONAN_LIBS_EXPAT ${CONAN_PKG_LIBS_EXPAT} ${CONAN_SYSTEM_LIBS_EXPAT} ${CONAN_
 #################
 ###  SQLITE3
 #################
-set(CONAN_SQLITE3_ROOT "/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d")
-set(CONAN_INCLUDE_DIRS_SQLITE3 "/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d/include")
-set(CONAN_LIB_DIRS_SQLITE3 "/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d/lib")
-set(CONAN_BIN_DIRS_SQLITE3 "/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d/bin")
+set(CONAN_SQLITE3_ROOT "/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb")
+set(CONAN_INCLUDE_DIRS_SQLITE3 "/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb/include")
+set(CONAN_LIB_DIRS_SQLITE3 "/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb/lib")
+set(CONAN_BIN_DIRS_SQLITE3 "/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb/bin")
 set(CONAN_RES_DIRS_SQLITE3 )
 set(CONAN_SRC_DIRS_SQLITE3 )
-set(CONAN_BUILD_DIRS_SQLITE3 "/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d/")
+set(CONAN_BUILD_DIRS_SQLITE3 "/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb/")
 set(CONAN_FRAMEWORK_DIRS_SQLITE3 )
 set(CONAN_LIBS_SQLITE3 sqlite3)
 set(CONAN_PKG_LIBS_SQLITE3 sqlite3)
-set(CONAN_SYSTEM_LIBS_SQLITE3 pthread dl)
+set(CONAN_SYSTEM_LIBS_SQLITE3 )
 set(CONAN_FRAMEWORKS_SQLITE3 )
 set(CONAN_FRAMEWORKS_FOUND_SQLITE3 "")  # Will be filled later
 set(CONAN_DEFINES_SQLITE3 )
@@ -228,17 +228,17 @@ set(CONAN_LIBS_SQLITE3 ${CONAN_PKG_LIBS_SQLITE3} ${CONAN_SYSTEM_LIBS_SQLITE3} ${
 #################
 ###  OPENSSL
 #################
-set(CONAN_OPENSSL_ROOT "/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709")
-set(CONAN_INCLUDE_DIRS_OPENSSL "/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include")
-set(CONAN_LIB_DIRS_OPENSSL "/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/lib")
-set(CONAN_BIN_DIRS_OPENSSL "/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/bin")
+set(CONAN_OPENSSL_ROOT "/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47")
+set(CONAN_INCLUDE_DIRS_OPENSSL "/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/include")
+set(CONAN_LIB_DIRS_OPENSSL "/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/lib")
+set(CONAN_BIN_DIRS_OPENSSL "/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/bin")
 set(CONAN_RES_DIRS_OPENSSL )
 set(CONAN_SRC_DIRS_OPENSSL )
-set(CONAN_BUILD_DIRS_OPENSSL "/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/")
+set(CONAN_BUILD_DIRS_OPENSSL "/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/")
 set(CONAN_FRAMEWORK_DIRS_OPENSSL )
 set(CONAN_LIBS_OPENSSL ssl crypto)
 set(CONAN_PKG_LIBS_OPENSSL ssl crypto)
-set(CONAN_SYSTEM_LIBS_OPENSSL dl pthread)
+set(CONAN_SYSTEM_LIBS_OPENSSL )
 set(CONAN_FRAMEWORKS_OPENSSL )
 set(CONAN_FRAMEWORKS_FOUND_OPENSSL "")  # Will be filled later
 set(CONAN_DEFINES_OPENSSL )
@@ -266,13 +266,13 @@ set(CONAN_LIBS_OPENSSL ${CONAN_PKG_LIBS_OPENSSL} ${CONAN_SYSTEM_LIBS_OPENSSL} ${
 #################
 ###  BZIP2
 #################
-set(CONAN_BZIP2_ROOT "/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0")
-set(CONAN_INCLUDE_DIRS_BZIP2 "/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/include")
-set(CONAN_LIB_DIRS_BZIP2 "/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/lib")
-set(CONAN_BIN_DIRS_BZIP2 "/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/bin")
+set(CONAN_BZIP2_ROOT "/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7")
+set(CONAN_INCLUDE_DIRS_BZIP2 "/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7/include")
+set(CONAN_LIB_DIRS_BZIP2 "/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7/lib")
+set(CONAN_BIN_DIRS_BZIP2 "/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7/bin")
 set(CONAN_RES_DIRS_BZIP2 )
 set(CONAN_SRC_DIRS_BZIP2 )
-set(CONAN_BUILD_DIRS_BZIP2 "/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/")
+set(CONAN_BUILD_DIRS_BZIP2 "/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7/")
 set(CONAN_FRAMEWORK_DIRS_BZIP2 )
 set(CONAN_LIBS_BZIP2 bz2)
 set(CONAN_PKG_LIBS_BZIP2 bz2)
@@ -304,13 +304,13 @@ set(CONAN_LIBS_BZIP2 ${CONAN_PKG_LIBS_BZIP2} ${CONAN_SYSTEM_LIBS_BZIP2} ${CONAN_
 #################
 ###  ZLIB
 #################
-set(CONAN_ZLIB_ROOT "/home/slawa4s/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709")
-set(CONAN_INCLUDE_DIRS_ZLIB "/home/slawa4s/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include")
-set(CONAN_LIB_DIRS_ZLIB "/home/slawa4s/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/lib")
+set(CONAN_ZLIB_ROOT "/Users/vitalypavlenko/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47")
+set(CONAN_INCLUDE_DIRS_ZLIB "/Users/vitalypavlenko/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/include")
+set(CONAN_LIB_DIRS_ZLIB "/Users/vitalypavlenko/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/lib")
 set(CONAN_BIN_DIRS_ZLIB )
 set(CONAN_RES_DIRS_ZLIB )
 set(CONAN_SRC_DIRS_ZLIB )
-set(CONAN_BUILD_DIRS_ZLIB "/home/slawa4s/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/")
+set(CONAN_BUILD_DIRS_ZLIB "/Users/vitalypavlenko/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/")
 set(CONAN_FRAMEWORK_DIRS_ZLIB )
 set(CONAN_LIBS_ZLIB z)
 set(CONAN_PKG_LIBS_ZLIB z)
@@ -347,11 +347,11 @@ set(CONAN_PACKAGE_VERSION None)
 set(CONAN_SETTINGS_ARCH "x86_64")
 set(CONAN_SETTINGS_ARCH_BUILD "x86_64")
 set(CONAN_SETTINGS_BUILD_TYPE "Release")
-set(CONAN_SETTINGS_COMPILER "gcc")
-set(CONAN_SETTINGS_COMPILER_LIBCXX "libstdc++11")
-set(CONAN_SETTINGS_COMPILER_VERSION "9")
-set(CONAN_SETTINGS_OS "Linux")
-set(CONAN_SETTINGS_OS_BUILD "Linux")
+set(CONAN_SETTINGS_COMPILER "apple-clang")
+set(CONAN_SETTINGS_COMPILER_LIBCXX "libc++")
+set(CONAN_SETTINGS_COMPILER_VERSION "11.0")
+set(CONAN_SETTINGS_OS "Macos")
+set(CONAN_SETTINGS_OS_BUILD "Macos")
 
 set(CONAN_DEPENDENCIES poco nlohmann_json pcre expat sqlite3 openssl bzip2 zlib)
 # Storing original command line args (CMake helper) flags
@@ -361,30 +361,30 @@ set(CONAN_CMD_SHARED_LINKER_FLAGS ${CONAN_SHARED_LINKER_FLAGS})
 set(CONAN_CMD_C_FLAGS ${CONAN_C_FLAGS})
 # Defining accumulated conan variables for all deps
 
-set(CONAN_INCLUDE_DIRS "/home/slawa4s/.conan/data/poco/1.9.4/_/_/package/8b4490bc851e1c66c0a44d9243069c16449ee2db/include"
-			"/home/slawa4s/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508/include"
-			"/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80/include"
-			"/home/slawa4s/.conan/data/expat/2.2.10/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"
-			"/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d/include"
-			"/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"
-			"/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/include"
-			"/home/slawa4s/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include" ${CONAN_INCLUDE_DIRS})
-set(CONAN_LIB_DIRS "/home/slawa4s/.conan/data/poco/1.9.4/_/_/package/8b4490bc851e1c66c0a44d9243069c16449ee2db/lib"
-			"/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80/lib"
-			"/home/slawa4s/.conan/data/expat/2.2.10/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/lib"
-			"/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d/lib"
-			"/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/lib"
-			"/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/lib"
-			"/home/slawa4s/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/lib" ${CONAN_LIB_DIRS})
-set(CONAN_BIN_DIRS "/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80/bin"
-			"/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d/bin"
-			"/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/bin"
-			"/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/bin" ${CONAN_BIN_DIRS})
+set(CONAN_INCLUDE_DIRS "/Users/vitalypavlenko/.conan/data/poco/1.9.4/_/_/package/40e6b5f4ead7d44df63e44dbb811268cbc705acb/include"
+			"/Users/vitalypavlenko/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508/include"
+			"/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec/include"
+			"/Users/vitalypavlenko/.conan/data/expat/2.2.10/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/include"
+			"/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb/include"
+			"/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/include"
+			"/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7/include"
+			"/Users/vitalypavlenko/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/include" ${CONAN_INCLUDE_DIRS})
+set(CONAN_LIB_DIRS "/Users/vitalypavlenko/.conan/data/poco/1.9.4/_/_/package/40e6b5f4ead7d44df63e44dbb811268cbc705acb/lib"
+			"/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec/lib"
+			"/Users/vitalypavlenko/.conan/data/expat/2.2.10/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/lib"
+			"/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb/lib"
+			"/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/lib"
+			"/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7/lib"
+			"/Users/vitalypavlenko/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/lib" ${CONAN_LIB_DIRS})
+set(CONAN_BIN_DIRS "/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec/bin"
+			"/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb/bin"
+			"/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/bin"
+			"/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7/bin" ${CONAN_BIN_DIRS})
 set(CONAN_RES_DIRS  ${CONAN_RES_DIRS})
 set(CONAN_FRAMEWORK_DIRS  ${CONAN_FRAMEWORK_DIRS})
-set(CONAN_LIBS PocoZip PocoNetSSL PocoRedis PocoUtil PocoMongoDB PocoDataSQLite PocoNet PocoData PocoEncodings PocoXML PocoCrypto PocoJSON PocoFoundation pcreposix pcre pcre16 pcre32 expat sqlite3 ssl crypto bz2 z ${CONAN_LIBS})
-set(CONAN_PKG_LIBS PocoZip PocoNetSSL PocoRedis PocoUtil PocoMongoDB PocoDataSQLite PocoNet PocoData PocoEncodings PocoXML PocoCrypto PocoJSON PocoFoundation pcreposix pcre pcre16 pcre32 expat sqlite3 ssl crypto bz2 z ${CONAN_PKG_LIBS})
-set(CONAN_SYSTEM_LIBS rt dl pthread ${CONAN_SYSTEM_LIBS})
+set(CONAN_LIBS PocoZip PocoNetSSL PocoMongoDB PocoDataSQLite PocoRedis PocoUtil PocoNet PocoData PocoEncodings PocoJSON PocoCrypto PocoXML PocoFoundation pcreposix pcre pcre16 pcre32 expat sqlite3 ssl crypto bz2 z ${CONAN_LIBS})
+set(CONAN_PKG_LIBS PocoZip PocoNetSSL PocoMongoDB PocoDataSQLite PocoRedis PocoUtil PocoNet PocoData PocoEncodings PocoJSON PocoCrypto PocoXML PocoFoundation pcreposix pcre pcre16 pcre32 expat sqlite3 ssl crypto bz2 z ${CONAN_PKG_LIBS})
+set(CONAN_SYSTEM_LIBS  ${CONAN_SYSTEM_LIBS})
 set(CONAN_FRAMEWORKS  ${CONAN_FRAMEWORKS})
 set(CONAN_FRAMEWORKS_FOUND "")  # Will be filled later
 set(CONAN_DEFINES "-DXML_STATIC"
@@ -392,14 +392,14 @@ set(CONAN_DEFINES "-DXML_STATIC"
 			"-DJSON_USE_IMPLICIT_CONVERSIONS=1"
 			"-DPOCO_STATIC=ON" ${CONAN_DEFINES})
 set(CONAN_BUILD_MODULES_PATHS  ${CONAN_BUILD_MODULES_PATHS})
-set(CONAN_CMAKE_MODULE_PATH "/home/slawa4s/.conan/data/poco/1.9.4/_/_/package/8b4490bc851e1c66c0a44d9243069c16449ee2db/"
-			"/home/slawa4s/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508/"
-			"/home/slawa4s/.conan/data/pcre/8.41/_/_/package/3c05ae80ec6af4832a765851eea1c86614091d80/"
-			"/home/slawa4s/.conan/data/expat/2.2.10/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/"
-			"/home/slawa4s/.conan/data/sqlite3/3.33.0/_/_/package/01a8a96da981e1edfc87074a67d005b4b5f9950d/"
-			"/home/slawa4s/.conan/data/openssl/1.1.1h/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/"
-			"/home/slawa4s/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/"
-			"/home/slawa4s/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/" ${CONAN_CMAKE_MODULE_PATH})
+set(CONAN_CMAKE_MODULE_PATH "/Users/vitalypavlenko/.conan/data/poco/1.9.4/_/_/package/40e6b5f4ead7d44df63e44dbb811268cbc705acb/"
+			"/Users/vitalypavlenko/.conan/data/nlohmann_json/3.9.1/_/_/package/d1091b2ed420e6d287293709a907ae824d5de508/"
+			"/Users/vitalypavlenko/.conan/data/pcre/8.41/_/_/package/5ab45f4d113355028f0b9b56ff2d0ae9170f0aec/"
+			"/Users/vitalypavlenko/.conan/data/expat/2.2.10/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/"
+			"/Users/vitalypavlenko/.conan/data/sqlite3/3.33.0/_/_/package/c765fc4d1112e2bdf851c4b5ce49599dc19c46bb/"
+			"/Users/vitalypavlenko/.conan/data/openssl/1.1.1h/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/"
+			"/Users/vitalypavlenko/.conan/data/bzip2/1.0.8/_/_/package/32bef4803d4b079e983ecb27f105881e778bc5a7/"
+			"/Users/vitalypavlenko/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/" ${CONAN_CMAKE_MODULE_PATH})
 
 set(CONAN_CXX_FLAGS " ${CONAN_CXX_FLAGS}")
 set(CONAN_SHARED_LINKER_FLAGS " ${CONAN_SHARED_LINKER_FLAGS}")

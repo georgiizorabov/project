@@ -1,10 +1,10 @@
 [settings]
     arch=x86_64
     build_type=Release
-    compiler=gcc
-    compiler.libcxx=libstdc++11
-    compiler.version=9
-    os=Linux
+    compiler=apple-clang
+    compiler.libcxx=libc++
+    compiler.version=11.0
+    os=Macos
 
 [requires]
     nlohmann_json/3.Y.Z
@@ -17,21 +17,21 @@
     arch=x86_64
     arch_build=x86_64
     build_type=Release
-    compiler=gcc
-    compiler.libcxx=libstdc++11
-    compiler.version=9
-    os=Linux
-    os_build=Linux
+    compiler=apple-clang
+    compiler.libcxx=libc++
+    compiler.version=11.0
+    os=Macos
+    os_build=Macos
 
 [full_requires]
-    bzip2/1.0.8:da606cf731e334010b0bf6e85a2a6f891b9f36b0
-    expat/2.2.10:6af9cc7cb931c5ad942174fd7838eb655717c709
+    bzip2/1.0.8:32bef4803d4b079e983ecb27f105881e778bc5a7
+    expat/2.2.10:f74366f76f700cc6e991285892ad7a23c30e6d47
     nlohmann_json/3.9.1:d1091b2ed420e6d287293709a907ae824d5de508
-    openssl/1.1.1h:6af9cc7cb931c5ad942174fd7838eb655717c709
-    pcre/8.41:3c05ae80ec6af4832a765851eea1c86614091d80
-    poco/1.9.4:8b4490bc851e1c66c0a44d9243069c16449ee2db
-    sqlite3/3.33.0:01a8a96da981e1edfc87074a67d005b4b5f9950d
-    zlib/1.2.11:6af9cc7cb931c5ad942174fd7838eb655717c709
+    openssl/1.1.1h:f74366f76f700cc6e991285892ad7a23c30e6d47
+    pcre/8.41:5ab45f4d113355028f0b9b56ff2d0ae9170f0aec
+    poco/1.9.4:40e6b5f4ead7d44df63e44dbb811268cbc705acb
+    sqlite3/3.33.0:c765fc4d1112e2bdf851c4b5ce49599dc19c46bb
+    zlib/1.2.11:f74366f76f700cc6e991285892ad7a23c30e6d47
 
 [full_options]
     bzip2:build_executable=True
