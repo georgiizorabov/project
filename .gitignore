@@ -38,6 +38,6 @@ _deps
 *.out
 *.app
 
-JSON_and_Conan/bin
+JSON_and_Conan/build/bin
 JSON_and_Conan/.idea
 JSON_and_Conan/.vscode
