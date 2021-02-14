@@ -54,8 +54,44 @@ using json = nlohmann::json;
 
 int main() {
     json j;
-    make_new_to_do(j);
-    std::cout << j.dump(4);
-    write_to_file("ToDo_to.txt", j);
+    std::string cmd;
+    std::cout << "> ";
+    while (std::cin >> cmd){
+        if (cmd == "exit"){
+            break;
+        }
+        if (cmd == "load"){
+            std::cout << "file mame: ";
+            std::string file_name;
+            std::cin >> file_name;
+            if (!check_for_read(file_name)){
+                std::cout << "File doesn't exist \n";
+                std::cout << "> ";
+                continue;
+            }
+            j = read_from_file(file_name);
+            std::cout << "> ";
+            continue;
+        }
+        if (cmd == "save"){
+            std::cout << "file mame: ";
+            std::string file_name;
+            std::cin >> file_name;
+            if (!check_for_read(file_name)){
+                std::cout << "File doesn't exist \n";
+                std::cout << "> ";
+                continue;
+            }
+            write_to_file(file_name, j);
+            std::cout << "> ";
+            continue;
+        }
+        if (cmd == "make"){
+            make_new_to_do(j);
+            std::cout << "> ";
+            continue;
+        }
+        std::cout << "command not found(\n> ";
+    }
     return 0;
 }
