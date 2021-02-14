@@ -4,7 +4,7 @@
 #include <string>
 
 using json = nlohmann::json;
-
+[[maybe_unused]]
 [[maybe_unused]] json read_from_file(const std::string& file_name){
     json j;
     std::ifstream todo_file(file_name);
@@ -60,6 +60,7 @@ int main() {
               << "save - save json to file \n"
               << "make - make new ToDo \n"
               << "show - show this json\n"
+              << "go$ha - do gosha\n"
               << "exit - exit\n"
               << "============\n > ";
     while (std::cin >> cmd){
@@ -100,6 +101,10 @@ int main() {
         if (cmd == "make"){
             make_new_to_do(j);
             std::cout << "> ";
+            continue;
+        }
+        if (cmd == "go$ha"){
+            std::cout << "___________----------__________--------__________-----------____________----------";
             continue;
         }
         std::cout << "command not found(\n> ";
