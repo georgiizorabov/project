@@ -37,18 +37,18 @@
 /Users/vitalypavlenko/.conan/data/zlib/1.2.11/_/_/package/f74366f76f700cc6e991285892ad7a23c30e6d47/
 
 [libs]
-PocoZip
 PocoNetSSL
-PocoMongoDB
-PocoDataSQLite
+PocoZip
 PocoRedis
+PocoDataSQLite
 PocoUtil
+PocoMongoDB
 PocoNet
 PocoData
-PocoEncodings
-PocoJSON
 PocoCrypto
+PocoJSON
 PocoXML
+PocoEncodings
 PocoFoundation
 pcreposix
 pcre
@@ -111,18 +111,18 @@ POCO_STATIC=ON
 /Users/vitalypavlenko/.conan/data/poco/1.9.4/_/_/package/40e6b5f4ead7d44df63e44dbb811268cbc705acb/
 
 [libs_poco]
-PocoZip
 PocoNetSSL
-PocoMongoDB
-PocoDataSQLite
+PocoZip
 PocoRedis
+PocoDataSQLite
 PocoUtil
+PocoMongoDB
 PocoNet
 PocoData
-PocoEncodings
-PocoJSON
 PocoCrypto
+PocoJSON
 PocoXML
+PocoEncodings
 PocoFoundation
 
 [system_libs_poco]

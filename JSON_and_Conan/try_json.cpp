@@ -110,6 +110,7 @@ int main() {
             std::cin >> name;
             std::cout << "Hello, " << name << "\n";
             std::cout << "> ";
+        }
         if (cmd == "go$ha"){
             std::cout << "___________----------__________--------__________-----------____________----------";
             continue;
