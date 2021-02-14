@@ -11,4 +11,4 @@ conan install ..
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build .
 
-bin/md5
+./build/bin/try_json

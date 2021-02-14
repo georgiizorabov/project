@@ -55,13 +55,19 @@ using json = nlohmann::json;
 int main() {
     json j;
     std::string cmd;
-    std::cout << "> ";
+    std::cout << "============\n"
+              << "load - load json from file \n"
+              << "save - save json to file \n"
+              << "make - make new ToDo \n"
+              << "show - show this json\n"
+              << "exit - exit\n"
+              << "============\n > ";
     while (std::cin >> cmd){
         if (cmd == "exit"){
             break;
         }
         if (cmd == "load"){
-            std::cout << "file mame: ";
+            std::cout << "file name: ";
             std::string file_name;
             std::cin >> file_name;
             if (!check_for_read(file_name)){
@@ -74,7 +80,7 @@ int main() {
             continue;
         }
         if (cmd == "save"){
-            std::cout << "file mame: ";
+            std::cout << "file name: ";
             std::string file_name;
             std::cin >> file_name;
             if (!check_for_read(file_name)){
@@ -84,6 +90,11 @@ int main() {
             }
             write_to_file(file_name, j);
             std::cout << "> ";
+            continue;
+        }
+        if (cmd == "show"){
+            std::cout << j.dump(4);
+            std::cout << "\n> ";
             continue;
         }
         if (cmd == "make"){
