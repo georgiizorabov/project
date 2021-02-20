@@ -24,8 +24,16 @@ int main(int, char**)
 
     GLFWwindow* window = glfwCreateWindow(1280, 720, "Cool project", nullptr, nullptr);
 
-    if (window == nullptr)
+    std::ifstream from("ToDo");
+    std::ofstream in("ToDo");
+    ToDo_Json my_j;
+
+    if (window == nullptr or !from.is_open() or !in.is_open()) {
+        std::cout << "FILE NOT FOUND!!!" << std::endl;
         return 1;
+    }
+
+    //my_j.read_from_file(from);
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
@@ -36,8 +44,6 @@ int main(int, char**)
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL2_Init();
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-    ToDo_Json my_j;
 
     while (!glfwWindowShouldClose(window))
     {
@@ -59,6 +65,9 @@ int main(int, char**)
             if (ImGui::Button("Show ToDo")){
                 show_to_do = true;
             }
+            if (ImGui::Button("Save in file")) {
+                my_j.write_to_file(in);
+            }
             ImGui::End();
         }
         if (make_json){
@@ -76,7 +85,6 @@ int main(int, char**)
                 std::string id_ = id;
                 std::string text_ = text;
                 my_j.save_id(id_, text_, done);
-                make_json = false;
             }
             if (!make_json){
                 done = false;

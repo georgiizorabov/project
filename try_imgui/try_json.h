@@ -23,17 +23,14 @@ public:
     }
 
     void save_id(std::string &id, std::string &text, bool &done){
-        j["id"] = id;
-        j["text"] = text;
-        j["done"] = done;
+        j[id]["text"] = text;
+        j[id]["done"] = done;
     }
 
-    void read_from_file(const std::string& file_name){
-        std::ifstream todo_file(file_name);
+    void read_from_file(std::ifstream &todo_file){
         todo_file >> j;
     }
-    void write_to_file(const std::string& file_name){
-        std::ofstream in(file_name);
+    void write_to_file(std::ofstream &in){
         in << j.dump();
     }
 };
