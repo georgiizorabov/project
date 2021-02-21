@@ -3,6 +3,7 @@ imgui/1.80
 glfw/3.3.2
 glew/2.2.0
 nlohmann_json/3.9.1
+cpr/1.5.0
 
 [generators]
 cmake_multi

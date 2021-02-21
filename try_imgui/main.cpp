@@ -4,25 +4,28 @@
 #include "bindings/imgui_impl_opengl2.h"
 #include <cstdio>
 #include <GLFW/glfw3.h>
+#include <string>
+#include <iostream>
+#include "server.h"
 
-void clear_char(char *start, const char *finish){
+//#include <cpr/cpr.h>
+void clear_char(char *start, const char *finish) {
     for (char *ptr = start; ptr < finish; ++ptr) {
         *ptr = '\0';
     }
 }
-static void glfw_error_callback(int error, const char* description)
-{
+
+static void glfw_error_callback(int error, const char *description) {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
-int main(int, char**)
-{
+int main(int, char **) {
     glfwSetErrorCallback(glfw_error_callback);
 
     if (!glfwInit())
         return 1;
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Cool project", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(1280, 720, "Cool project", nullptr, nullptr);
 
     std::ifstream from("ToDo");
     std::ofstream in("ToDo");
@@ -39,14 +42,14 @@ int main(int, char**)
     glfwSwapInterval(1);
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGuiIO &io = ImGui::GetIO();
+    (void) io;
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL2_Init();
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         ImGui_ImplOpenGL2_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -55,22 +58,27 @@ int main(int, char**)
         static int counter_of_ToDo = 0;
         static bool make_json = false;
         static bool show_to_do = true;
+        static bool server = false;
 
         {
-            ImGui::Begin("ToDoler");                          // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin(
+                    "ToDoler");                          // Create a window called "Hello, world!" and append into it.
             ImGui::Text("Settings for json");
-            if (ImGui::Button("Make new json")){
+            if (ImGui::Button("Make new json")) {
                 make_json = true;
             }
-            if (ImGui::Button("Show ToDo")){
+            if (ImGui::Button("Show ToDo")) {
                 show_to_do = true;
             }
             if (ImGui::Button("Save in file")) {
                 my_j.write_to_file(in);
             }
+            if (ImGui::Button("Save on server")) {
+                server = true;
+            }
             ImGui::End();
         }
-        if (make_json){
+        if (make_json) {
             ImGui::Begin("Json maker");
             ImGui::Text("There you can make new new json ToDo list");
             static char id[10], text[200];
@@ -86,7 +94,7 @@ int main(int, char**)
                 std::string text_ = text;
                 my_j.save_id(id_, text_, done);
             }
-            if (!make_json){
+            if (!make_json) {
                 done = false;
                 clear_char(std::begin(id), std::end(id));
                 clear_char(std::begin(text), std::end(text));
@@ -94,13 +102,18 @@ int main(int, char**)
             ImGui::End();
         }
 
-        if (show_to_do){
+        if (show_to_do) {
             ImGui::Begin("My To Do");
             ImGui::Text("%s", my_j.to_str_json().c_str());
             if (ImGui::Button("Close")) {
                 show_to_do = false;
             }
             ImGui::End();
+        }
+        if (server) {
+            //std::cout << my_j.to_str_json() << "\n==============\n";
+            put_on_server(my_j.to_str_json());
+            server = false;
         }
 
         ImGui::Render();
