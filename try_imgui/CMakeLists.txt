@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.6)
 project(dear-imgui-conan)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 #include_directories(~/.conan/data/imgui/1.80/_/_/package/b911f48570f9bb2902d9e83b2b9ebf9d376c8c56/include/)
 #include_directories(~/.conan/data/glfw/3.3.2/_/_/package/751cb22e3ee3d822a8b7af83813b032dc3867205/include/)

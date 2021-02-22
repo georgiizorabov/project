@@ -1,7 +1,16 @@
-cd dear-imgui-conan-example
-mkdir build
+#!/bin/bash
+
+set -x
+
+mkdir -p build
 cd build
-conan install .. -s compiler=gcc -s compiler.libcxx=libstdc++11 --build=missing
+rm -f dear-imgui-conan
+if [ "$(uname)" != "Darwin" ]; then
+    # if it's not Mac
+    # https://stackoverflow.com/a/17072017
+    CONAN_COMPILER_ARGS="-s compiler=gcc -s compiler.libcxx=libstdc++11"
+fi
+conan install .. $CONAN_COMPILER_ARGS --build=missing
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build .
 ./dear-imgui-conan
