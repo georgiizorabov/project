@@ -9,9 +9,8 @@
 using nlohmann::json;
 
 struct ToDo_Json {
-private:
     json j;
-public:
+
     ToDo_Json() = default;
     ToDo_Json(ToDo_Json &&) = default;
     ToDo_Json(const ToDo_Json &) = default;
@@ -22,7 +21,7 @@ public:
         return j.dump(4);
     }
 
-    void save_id(std::string &id, std::string &text, bool &done){
+    void save_id(std::string &id, std::string &text, bool done = false){
         j[id]["text"] = text;
         j[id]["done"] = done;
     }

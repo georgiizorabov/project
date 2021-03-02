@@ -48,7 +48,6 @@ int main(int, char **) {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL2_Init();
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         ImGui_ImplOpenGL2_NewFrame();
@@ -59,16 +58,20 @@ int main(int, char **) {
         static bool make_json = false;
         static bool show_to_do = true;
         static bool server = false;
+        static bool show_done = false;
 
         {
             ImGui::Begin(
-                    "ToDoler");                          // Create a window called "Hello, world!" and append into it.
+                    "ToDoler");
             ImGui::Text("Settings for json");
-            if (ImGui::Button("Make new json")) {
+            if (ImGui::Button("New ToDo")) {
                 make_json = true;
             }
             if (ImGui::Button("Show ToDo")) {
                 show_to_do = true;
+            }
+            if (ImGui::Button("Show done")) {
+                show_done = true;
             }
             if (ImGui::Button("Save in file")) {
                 my_j.write_to_file(in);
@@ -80,22 +83,21 @@ int main(int, char **) {
         }
         if (make_json) {
             ImGui::Begin("Json maker");
-            ImGui::Text("There you can make new new json ToDo list");
+            ImGui::Text("There you can make new ToDo");
             static char id[10], text[200];
-            static bool done = false;
+            //static bool done = false;
             ImGui::InputText("id", id, IM_ARRAYSIZE(id));
             ImGui::InputText("What you should to do", text, IM_ARRAYSIZE(text));
-            ImGui::Checkbox("You did it?", &done);
+            //ImGui::Checkbox("You did it?", &done);
             if (ImGui::Button("Close")) {
                 make_json = false;
             }
             if (ImGui::Button("Save")) {
                 std::string id_ = id;
                 std::string text_ = text;
-                my_j.save_id(id_, text_, done);
+                my_j.save_id(id_, text_);
             }
             if (!make_json) {
-                done = false;
                 clear_char(std::begin(id), std::end(id));
                 clear_char(std::begin(text), std::end(text));
             }
@@ -104,7 +106,32 @@ int main(int, char **) {
 
         if (show_to_do) {
             ImGui::Begin("My To Do");
-            ImGui::Text("%s", my_j.to_str_json().c_str());
+            //ImGui::Text("%s", my_j.to_str_json().c_str());
+            bool done;
+            for (auto &ToDo : my_j.j.items()){
+                done = ToDo.value()["done"];
+                if (!done) {
+                    ImGui::Text("Your id: %s", ToDo.key().c_str());
+                    ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
+                    ImGui::Checkbox("You did it?", &done);
+                    ToDo.value()["done"] = done;
+                }
+            }
+            if (ImGui::Button("Close")) {
+                show_to_do = false;
+            }
+            ImGui::End();
+        }
+        if (show_done) {
+            ImGui::Begin("Done");
+            //ImGui::Text("%s", my_j.to_str_json().c_str());
+            for (auto &ToDo : my_j.j.items()){
+                bool done = ToDo.value()["done"];
+                if (done) {
+                    ImGui::Text("Your id: %s", ToDo.key().c_str());
+                    ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
+                }
+            }
             if (ImGui::Button("Close")) {
                 show_to_do = false;
             }
