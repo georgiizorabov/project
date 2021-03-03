@@ -20,7 +20,12 @@ struct ToDo_Json {
     std::string to_str_json(){
         return j.dump(4);
     }
-
+    std::string str_to_server(){
+        return j.dump();
+    }
+    void clear(){
+        j.clear();
+    }
     void save_id(std::string &id, std::string &text, bool done = false){
         j[id]["text"] = text;
         j[id]["done"] = done;

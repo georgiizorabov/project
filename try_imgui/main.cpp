@@ -15,11 +15,15 @@ void clear_char(char *start, const char *finish) {
     }
 }
 
+static std::string username;
+
 static void glfw_error_callback(int error, const char *description) {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
 int main(int, char **) {
+    static std::string hello_name = "You didn't login yet";
+
     glfwSetErrorCallback(glfw_error_callback);
 
     if (!glfwInit())
@@ -58,18 +62,23 @@ int main(int, char **) {
         static bool make_json = false;
         static bool show_to_do = true;
         static bool server_put = false;
+        static bool server_exeption = false;
+        static bool username_change = false;
         static bool server_get = false;
         static bool show_done = false;
 
         {
             ImGui::Begin(
                     "ToDoler");
-            ImGui::Text("Settings for json");
+            ImGui::Text("%s", hello_name.c_str());
             if (ImGui::Button("New ToDo")) {
                 make_json = true;
             }
             if (ImGui::Button("Show ToDo")) {
                 show_to_do = true;
+            }
+            if (ImGui::Button("Change username")) {
+                username_change = true;
             }
             if (ImGui::Button("Show done")) {
                 show_done = true;
@@ -82,6 +91,22 @@ int main(int, char **) {
             }
             if (ImGui::Button("get from server")) {
                 server_get = true;
+            }
+            ImGui::End();
+        }
+        if (username_change){
+            ImGui::Begin("Done");
+            ImGui::Text("Put your username there:");
+            static char username_[15];
+            ImGui::InputText("", username_, IM_ARRAYSIZE(username_));
+            if (ImGui::Button("Save")) {
+                my_j.clear();
+                username = username_;
+                clear_char(std::begin(username_), std::end(username_));
+                hello_name = "Hello, " + username;
+            }
+            if (ImGui::Button("Close")) {
+                username_change = false;
             }
             ImGui::End();
         }
@@ -142,17 +167,24 @@ int main(int, char **) {
             ImGui::End();
         }
         if (server_put) {
-            //std::cout << my_j.to_str_json() << "\n==============\n";
-            put_on_server("put here login", my_j.to_str_json());
-
+            put_on_server(username, my_j.str_to_server());
+            std::cout << my_j.str_to_server();
             server_put = false;
         }
         if (server_get) {
-            //std::cout << my_j.to_str_json() << "\n==============\n";
-            get_from_server("gosha");
+            try {
+                my_j.j = json::parse(get_from_server(username));
+            } catch (...){
+                server_exeption = true;
+            }
             server_get = false;
         }
-
+        if (server_exeption) {
+            ImGui::Text("Server problem, try again with another login");
+            if (ImGui::Button("Close")) {
+                server_exeption = false;
+            }
+        }
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
