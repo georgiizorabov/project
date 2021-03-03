@@ -57,7 +57,8 @@ int main(int, char **) {
         static int counter_of_ToDo = 0;
         static bool make_json = false;
         static bool show_to_do = true;
-        static bool server = false;
+        static bool server_put = false;
+        static bool server_get = false;
         static bool show_done = false;
 
         {
@@ -77,7 +78,10 @@ int main(int, char **) {
                 my_j.write_to_file(in);
             }
             if (ImGui::Button("Save on server")) {
-                server = true;
+                server_put = true;
+            }
+            if (ImGui::Button("get from server")) {
+                server_get = true;
             }
             ImGui::End();
         }
@@ -137,10 +141,16 @@ int main(int, char **) {
             }
             ImGui::End();
         }
-        if (server) {
+        if (server_put) {
             //std::cout << my_j.to_str_json() << "\n==============\n";
-            put_on_server(my_j.to_str_json());
-            server = false;
+            put_on_server("put here login", my_j.to_str_json());
+
+            server_put = false;
+        }
+        if (server_get) {
+            //std::cout << my_j.to_str_json() << "\n==============\n";
+            get_from_server("gosha");
+            server_get = false;
         }
 
         ImGui::Render();
