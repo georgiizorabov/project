@@ -83,9 +83,6 @@ int main(int, char **) {
             if (ImGui::Button("Show done")) {
                 show_done = true;
             }
-            if (ImGui::Button("Save in file")) {
-                my_j.write_to_file(in);
-            }
             if (ImGui::Button("Save on server")) {
                 server_put = true;
             }
@@ -114,21 +111,17 @@ int main(int, char **) {
             ImGui::Begin("Json maker");
             ImGui::Text("There you can make new ToDo");
             static char id[10], text[200];
-            //static bool done = false;
             ImGui::InputText("id", id, IM_ARRAYSIZE(id));
             ImGui::InputText("What you should to do", text, IM_ARRAYSIZE(text));
-            //ImGui::Checkbox("You did it?", &done);
             if (ImGui::Button("Close")) {
                 make_json = false;
+                clear_char(std::begin(id), std::end(id));
+                clear_char(std::begin(text), std::end(text));
             }
             if (ImGui::Button("Save")) {
                 std::string id_ = id;
                 std::string text_ = text;
                 my_j.save_id(id_, text_);
-            }
-            if (!make_json) {
-                clear_char(std::begin(id), std::end(id));
-                clear_char(std::begin(text), std::end(text));
             }
             ImGui::End();
         }
@@ -167,17 +160,26 @@ int main(int, char **) {
             ImGui::End();
         }
         if (server_put) {
-            put_on_server(username, my_j.str_to_server());
-            std::cout << my_j.str_to_server();
-            server_put = false;
+            if (!username.empty()) {
+                put_on_server(username, my_j.str_to_server());
+                server_put = false;
+            } else {
+                username_change = true;
+                server_put = false;
+            }
         }
         if (server_get) {
-            try {
-                my_j.j = json::parse(get_from_server(username));
-            } catch (...){
-                server_exeption = true;
+            if (!username.empty()) {
+                try {
+                    my_j.j = json::parse(get_from_server(username));
+                } catch (...){
+                    server_exeption = true;
+                }
+                server_get = false;
+            } else {
+                username_change = true;
+                server_get = false;
             }
-            server_get = false;
         }
         if (server_exeption) {
             ImGui::Text("Server problem, try again with another login");
