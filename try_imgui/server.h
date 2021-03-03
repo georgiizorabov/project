@@ -30,10 +30,17 @@ std::string urlEncode(std::string str){
     return new_str;
 }
 
-void put_on_server(std::string str) {
-    std::string url = "https://rest-api-python.goshazorabov.repl.co/api/name/" + urlEncode(str);
-    cpr::Response r = cpr::Get(
-            cpr::Url{url});
+void put_on_server(const std::string& name, const std::string& info) {
+    std::string url = "https://rest-api-python.goshazorabov.repl.co/api/add/" + urlEncode(name) + "/" + urlEncode(info);
+    cpr::Response r = cpr::Get(cpr::Url{url});
+    r.status_code;                  // 200
+    r.header["content-type"];// application/json; charset=utf-8
+    std::cout << r.text << '\n';// JSON text string
+}
+
+void get_from_server(std::string name) {
+    std::string url = "https://rest-api-python.goshazorabov.repl.co/api/name/" + urlEncode(name);
+    cpr::Response r = cpr::Get(cpr::Url{url});
     r.status_code;                  // 200
     r.header["content-type"];// application/json; charset=utf-8
     std::cout << r.text << '\n';// JSON text string
