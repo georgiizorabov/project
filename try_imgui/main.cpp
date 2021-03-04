@@ -134,7 +134,7 @@ int main(int, char **) {
             }
             ImGui::Text("%s. Here you can make new ToDo.", hello_name.c_str());
             static char id[10], text[200];
-            ImGui::InputText("name", id, IM_ARRAYSIZE(id));
+            ImGui::InputText("Name", id, IM_ARRAYSIZE(id));
             ImGui::InputText("What you should do?", text, IM_ARRAYSIZE(text));
             if (ImGui::Button("Save")) {
                 std::string id_ = id;
@@ -162,7 +162,7 @@ int main(int, char **) {
                     ImGui::Text("ToDo name: %s", ToDo.key().c_str());
                     ImGui::TextColored(ImVec4(18,0,0,1), "%s", ToDo.value()["text"].dump().c_str());
                     //ImGui::Checkbox("You did it?", &done);
-                    if (ImGui::Button(("I did " + ToDo.key()).c_str())) {
+                    if (ImGui::Button(("I did this: " + ToDo.key()).c_str())) {
                         my_j.j[ToDo.key()]["done"] = true;
                         server_put = true;
                     }
