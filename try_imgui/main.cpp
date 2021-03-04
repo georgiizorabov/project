@@ -91,7 +91,7 @@ int main(int, char **) {
 //        }
         if (username_change){
             ImGui::Begin("Username changer");
-            ImGui::Text("Put your username there:");
+            ImGui::Text("Put your username here:");
             static char username_[15];
             ImGui::InputText("", username_, IM_ARRAYSIZE(username_));
             if (ImGui::Button("Save and close")) {
@@ -130,10 +130,10 @@ int main(int, char **) {
                 }
                 ImGui::EndMenuBar();
             }
-            ImGui::Text("%s. There you can make new ToDo.", hello_name.c_str());
+            ImGui::Text("%s. Here you can make new ToDo.", hello_name.c_str());
             static char id[10], text[200];
             ImGui::InputText("name", id, IM_ARRAYSIZE(id));
-            ImGui::InputText("What you should to do", text, IM_ARRAYSIZE(text));
+            ImGui::InputText("What you should do?", text, IM_ARRAYSIZE(text));
             if (ImGui::Button("Save")) {
                 std::string id_ = id;
                 std::string text_ = text;
@@ -157,10 +157,10 @@ int main(int, char **) {
             for (auto &ToDo : my_j.j.items()){
                 if (!ToDo.value()["done"]) {
                     std::cout << ToDo.value().dump() << std::endl;
-                    ImGui::Text("Your name: %s", ToDo.key().c_str());
-                    ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
+                    ImGui::Text("ToDo name: %s", ToDo.key().c_str());
+                    ImGui::TextColored(ImVec4(18,0,0,1), "%s", ToDo.value()["text"].dump().c_str());
                     //ImGui::Checkbox("You did it?", &done);
-                    if (ImGui::Button(("I did this: " + ToDo.key()).c_str())) {
+                    if (ImGui::Button(("Done!: " + ToDo.key()).c_str())) {
                         my_j.j[ToDo.key()]["done"] = true;
                         server_put = true;
                     }
@@ -178,8 +178,8 @@ int main(int, char **) {
             for (auto &ToDo : my_j.j.items()){
                 bool done = ToDo.value()["done"];
                 if (done) {
-                    ImGui::Text("Your name: %s", ToDo.key().c_str());
-                    ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
+                    ImGui::Text("ToDo name: %s", ToDo.key().c_str());
+                    ImGui::TextColored(ImVec4(0,1,0,1),"%s", ToDo.value()["text"].dump().c_str());
                     ImGui::Text("\n");
                 }
             }
