@@ -109,7 +109,7 @@ int main(int, char **) {
             ImGui::Begin("Json maker");
             ImGui::Text("There you can make new ToDo");
             static char id[10], text[200];
-            ImGui::InputText("id", id, IM_ARRAYSIZE(id));
+            ImGui::InputText("name", id, IM_ARRAYSIZE(id));
             ImGui::InputText("What you should to do", text, IM_ARRAYSIZE(text));
             if (ImGui::Button("Save")) {
                 std::string id_ = id;
@@ -134,7 +134,7 @@ int main(int, char **) {
             for (auto &ToDo : my_j.j.items()){
                 if (!ToDo.value()["done"]) {
                     std::cout << ToDo.value().dump() << std::endl;
-                    ImGui::Text("Your id: %s", ToDo.key().c_str());
+                    ImGui::Text("Your name: %s", ToDo.key().c_str());
                     ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
                     //ImGui::Checkbox("You did it?", &done);
                     if (ImGui::Button(("I did this: " + ToDo.key()).c_str())) {
@@ -155,7 +155,7 @@ int main(int, char **) {
             for (auto &ToDo : my_j.j.items()){
                 bool done = ToDo.value()["done"];
                 if (done) {
-                    ImGui::Text("Your id: %s", ToDo.key().c_str());
+                    ImGui::Text("Your name: %s", ToDo.key().c_str());
                     ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
                 }
             }
