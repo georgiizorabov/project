@@ -66,7 +66,9 @@ int main(int, char **) {
         static bool server_exeption = false;
         static bool username_change = false;
         static bool server_get = false;
-
+        if (username.empty()) {
+            username_change = true;
+        }
         {
             ImGui::Begin(
                     "ToDoler");
