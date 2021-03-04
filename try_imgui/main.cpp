@@ -1,4 +1,5 @@
 #include <imgui.h>
+#include <imgui.h>
 #include "try_json.h"
 #include "bindings/imgui_impl_glfw.h"
 #include "bindings/imgui_impl_opengl2.h"
@@ -25,18 +26,19 @@ int main(int, char **) {
     static std::string hello_name = "You didn't login yet";
 
     glfwSetErrorCallback(glfw_error_callback);
+    glfwSetErrorCallback(glfw_error_callback);
 
     if (!glfwInit())
         return 1;
 
     GLFWwindow *window = glfwCreateWindow(1280, 720, "Cool project", nullptr, nullptr);
 
-    std::ifstream from("ToDo");
-    std::ofstream in("ToDo");
+//    std::ifstream from("ToDo");
+//    std::ofstream in("ToDo");
     ToDo_Json my_j;
 
-    if (window == nullptr or !from.is_open() or !in.is_open()) {
-        std::cout << "FILE NOT FOUND!!!" << std::endl;
+    if (window == nullptr) {/* or !from.is_open() or !in.is_open()) {
+        std::cout << "FILE NOT FOUND!!!" << std::endl;*/
         return 1;
     }
 
@@ -156,11 +158,11 @@ int main(int, char **) {
             //ImGui::Text("%s", my_j.to_str_json().c_str());
             for (auto &ToDo : my_j.j.items()){
                 if (!ToDo.value()["done"]) {
-                    std::cout << ToDo.value().dump() << std::endl;
+                    //std::cout << ToDo.value().dump() << std::endl;
                     ImGui::Text("ToDo name: %s", ToDo.key().c_str());
                     ImGui::TextColored(ImVec4(18,0,0,1), "%s", ToDo.value()["text"].dump().c_str());
                     //ImGui::Checkbox("You did it?", &done);
-                    if (ImGui::Button(("Done!: " + ToDo.key()).c_str())) {
+                    if (ImGui::Button(("I did " + ToDo.key()).c_str())) {
                         my_j.j[ToDo.key()]["done"] = true;
                         server_put = true;
                     }
