@@ -59,13 +59,13 @@ int main(int, char **) {
         ImGui::NewFrame();
 
         static int counter_of_ToDo = 0;
-        static bool make_json = false;
+        static bool make_json = true;
         static bool show_to_do = true;
+        static bool show_done = true;
         static bool server_put = false;
         static bool server_exeption = false;
         static bool username_change = false;
         static bool server_get = false;
-        static bool show_done = false;
 
         {
             ImGui::Begin(
@@ -109,20 +109,20 @@ int main(int, char **) {
             static char id[10], text[200];
             ImGui::InputText("id", id, IM_ARRAYSIZE(id));
             ImGui::InputText("What you should to do", text, IM_ARRAYSIZE(text));
-            if (ImGui::Button("Save and close")) {
+            if (ImGui::Button("Save")) {
                 std::string id_ = id;
                 std::string text_ = text;
                 my_j.save_id(id_, text_);
                 clear_char(std::begin(id), std::end(id));
                 clear_char(std::begin(text), std::end(text));
                 server_put = true;
-                make_json = false;
+               // make_json = false;
             }
-            if (ImGui::Button("Close")) {
-                make_json = false;
-                clear_char(std::begin(id), std::end(id));
-                clear_char(std::begin(text), std::end(text));
-            }
+//            if (ImGui::Button("Close")) {
+//                make_json = false;
+//                clear_char(std::begin(id), std::end(id));
+//                clear_char(std::begin(text), std::end(text));
+//            }
             ImGui::End();
         }
 
@@ -135,7 +135,7 @@ int main(int, char **) {
                     ImGui::Text("Your id: %s", ToDo.key().c_str());
                     ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
                     //ImGui::Checkbox("You did it?", &done);
-                    if (ImGui::Button("I did it")) {
+                    if (ImGui::Button(("I did this: " + ToDo.key()).c_str())) {
                         my_j.j[ToDo.key()]["done"] = true;
                         server_put = true;
                     }
