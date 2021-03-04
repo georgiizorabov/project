@@ -83,24 +83,20 @@ int main(int, char **) {
             if (ImGui::Button("Show done")) {
                 show_done = true;
             }
-            if (ImGui::Button("Save on server")) {
-                server_put = true;
-            }
-            if (ImGui::Button("get from server")) {
-                server_get = true;
-            }
             ImGui::End();
         }
         if (username_change){
-            ImGui::Begin("Done");
+            ImGui::Begin("Username changer");
             ImGui::Text("Put your username there:");
             static char username_[15];
             ImGui::InputText("", username_, IM_ARRAYSIZE(username_));
-            if (ImGui::Button("Save")) {
+            if (ImGui::Button("Save and close")) {
                 my_j.clear();
                 username = username_;
                 clear_char(std::begin(username_), std::end(username_));
                 hello_name = "Hello, " + username;
+                username_change = false;
+                server_get = true;
             }
             if (ImGui::Button("Close")) {
                 username_change = false;
@@ -113,15 +109,19 @@ int main(int, char **) {
             static char id[10], text[200];
             ImGui::InputText("id", id, IM_ARRAYSIZE(id));
             ImGui::InputText("What you should to do", text, IM_ARRAYSIZE(text));
+            if (ImGui::Button("Save and close")) {
+                std::string id_ = id;
+                std::string text_ = text;
+                my_j.save_id(id_, text_);
+                clear_char(std::begin(id), std::end(id));
+                clear_char(std::begin(text), std::end(text));
+                server_put = true;
+                make_json = false;
+            }
             if (ImGui::Button("Close")) {
                 make_json = false;
                 clear_char(std::begin(id), std::end(id));
                 clear_char(std::begin(text), std::end(text));
-            }
-            if (ImGui::Button("Save")) {
-                std::string id_ = id;
-                std::string text_ = text;
-                my_j.save_id(id_, text_);
             }
             ImGui::End();
         }
@@ -129,14 +129,16 @@ int main(int, char **) {
         if (show_to_do) {
             ImGui::Begin("My To Do");
             //ImGui::Text("%s", my_j.to_str_json().c_str());
-            bool done;
             for (auto &ToDo : my_j.j.items()){
-                done = ToDo.value()["done"];
-                if (!done) {
+                if (!ToDo.value()["done"]) {
+                    std::cout << ToDo.value().dump() << std::endl;
                     ImGui::Text("Your id: %s", ToDo.key().c_str());
                     ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
-                    ImGui::Checkbox("You did it?", &done);
-                    ToDo.value()["done"] = done;
+                    //ImGui::Checkbox("You did it?", &done);
+                    if (ImGui::Button("I did it")) {
+                        my_j.j[ToDo.key()]["done"] = true;
+                        server_put = true;
+                    }
                 }
             }
             if (ImGui::Button("Close")) {
@@ -144,6 +146,7 @@ int main(int, char **) {
             }
             ImGui::End();
         }
+
         if (show_done) {
             ImGui::Begin("Done");
             //ImGui::Text("%s", my_j.to_str_json().c_str());
@@ -155,10 +158,11 @@ int main(int, char **) {
                 }
             }
             if (ImGui::Button("Close")) {
-                show_to_do = false;
+                show_done = false;
             }
             ImGui::End();
         }
+
         if (server_put) {
             if (!username.empty()) {
                 put_on_server(username, my_j.str_to_server());
@@ -182,7 +186,7 @@ int main(int, char **) {
             }
         }
         if (server_exeption) {
-            ImGui::Text("Server problem, try again with another login");
+            ImGui::Text("Server problem, try again with another login, or sign up");
             if (ImGui::Button("Close")) {
                 server_exeption = false;
             }
