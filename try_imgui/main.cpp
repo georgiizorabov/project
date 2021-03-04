@@ -51,13 +51,14 @@ int main(int, char **) {
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL2_Init();
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    float clear_color[4] = {0.45f, 0.55f, 0.60f, 1.00f};
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
         ImGui_ImplOpenGL2_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        static float back_color[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
         static int counter_of_ToDo = 0;
         static bool make_json = true;
         static bool show_to_do = true;
@@ -66,27 +67,28 @@ int main(int, char **) {
         static bool server_exeption = false;
         static bool username_change = false;
         static bool server_get = false;
+        static bool color_changer = true;
         if (username.empty()) {
             username_change = true;
         }
-        {
-            ImGui::Begin(
-                    "ToDoler");
-            ImGui::Text("%s", hello_name.c_str());
-            if (ImGui::Button("New ToDo")) {
-                make_json = true;
-            }
-            if (ImGui::Button("Show ToDo")) {
-                show_to_do = true;
-            }
-            if (ImGui::Button("Change username")) {
-                username_change = true;
-            }
-            if (ImGui::Button("Show done")) {
-                show_done = true;
-            }
-            ImGui::End();
-        }
+//        {
+//            ImGui::Begin(
+//                    "ToDoler");
+//            ImGui::Text("%s", hello_name.c_str());
+//            if (ImGui::Button("New ToDo")) {
+//                make_json = true;
+//            }
+//            if (ImGui::Button("Show ToDo")) {
+//                show_to_do = true;
+//            }
+//            if (ImGui::Button("Change username")) {
+//                username_change = true;
+//            }
+//            if (ImGui::Button("Show done")) {
+//                show_done = true;
+//            }
+//            ImGui::End();
+//        }
         if (username_change){
             ImGui::Begin("Username changer");
             ImGui::Text("Put your username there:");
@@ -105,9 +107,30 @@ int main(int, char **) {
             }
             ImGui::End();
         }
+        if (color_changer){
+            ImGui::Begin("Background changer");
+            ImGui::Text("Put color of background");
+            ImGui::ColorEdit4("Color", clear_color);
+            if (ImGui::Button("Close")) {
+                color_changer = false;
+            }
+            ImGui::End();
+        }
         if (make_json) {
-            ImGui::Begin("Json maker");
-            ImGui::Text("There you can make new ToDo");
+            ImGui::Begin("ToDoler", &make_json, ImGuiWindowFlags_MenuBar);
+            if (ImGui::BeginMenuBar())
+            {
+                if (ImGui::BeginMenu("Edit"))
+                {
+                    if (ImGui::MenuItem("Change username")) { username_change = true; }
+                    if (ImGui::MenuItem("Change background")) {
+                        color_changer = true;
+                    }
+                    ImGui::EndMenu();
+                }
+                ImGui::EndMenuBar();
+            }
+            ImGui::Text("%s. There you can make new ToDo.", hello_name.c_str());
             static char id[10], text[200];
             ImGui::InputText("name", id, IM_ARRAYSIZE(id));
             ImGui::InputText("What you should to do", text, IM_ARRAYSIZE(text));
@@ -143,9 +166,9 @@ int main(int, char **) {
                     }
                 }
             }
-            if (ImGui::Button("Close")) {
-                show_to_do = false;
-            }
+//            if (ImGui::Button("Close")) {
+//                show_to_do = false;
+//            }
             ImGui::End();
         }
 
@@ -157,11 +180,12 @@ int main(int, char **) {
                 if (done) {
                     ImGui::Text("Your name: %s", ToDo.key().c_str());
                     ImGui::Text("%s", ToDo.value()["text"].dump().c_str());
+                    ImGui::Text("\n");
                 }
             }
-            if (ImGui::Button("Close")) {
-                show_done = false;
-            }
+//            if (ImGui::Button("Close")) {
+//                show_done = false;
+//            }
             ImGui::End();
         }
 
@@ -197,7 +221,7 @@ int main(int, char **) {
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+        glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
         glfwMakeContextCurrent(window);
