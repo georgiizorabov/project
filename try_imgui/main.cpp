@@ -203,12 +203,9 @@ int main(int, char **) {
         if (server_get) {
             if (!username.empty()) {
                 try {
-                    std::string server_output = get_from_server(username);
-                    if (!server_output.empty()){
-                        my_j.j = json::parse(server_output);
-                    }
+                    my_j.j = json::parse(get_from_server(username));
                 } catch (...){
-                    //server_exeption = true;
+                    server_exeption = true;
                 }
                 server_get = false;
             } else {
