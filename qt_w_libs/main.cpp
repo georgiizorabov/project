@@ -10,23 +10,15 @@
 #include <QApplication>
 #include <QPushButton>
 
+#include "mainwindow.h"
+
+
+
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-//    cpr
-    cpr::Response r = cpr::Get(cpr::Url{"http://neverssl.com/"});
+    QApplication a(argc, argv);
+    todolist app;
+    app.show();
 
-
-    QString str = QString::fromUtf8(r.text.c_str());
-    QPushButton hello(str);
-    hello.resize(100, 30);
-
-    hello.show();
-//    cpr
-    using json = nlohmann::json;
-
-    json j;
-    j["id"] = 5;
-
-    return app.exec();
+    return a.exec();
 }
