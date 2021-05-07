@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include "server.h"
 #include <QLabel>
+#include <QDebug>
 #include <QToolBar>
+#include <QPushButton>
 #include <QBoxLayout>
-
+#include <iostream>
 todolist::todolist() {
     QWidget* pWidget = new QWidget(this);
     pWidget->setStyleSheet("background-color: #ECF0F1");
@@ -72,8 +74,16 @@ todolist::todolist() {
     m_pActRemove->setIcon(QIcon(":/icons/images/delete.png"));
     connect(m_pActRemove, &QAction::triggered, this, &todolist::onRemove);
 
+    m_pActEdit = new QAction(this);
+    m_pActEdit->setIcon(QIcon(":/icons/images/edit.png"));
+    connect(m_pActEdit, &QAction::triggered, this, &todolist::onEdit);
+
     pToolBar->addAction(m_pActAdd);
     pToolBar->addAction(m_pActRemove);
+    pToolBar->addAction(m_pActEdit);
+
+
+
 
 }
 
@@ -82,11 +92,27 @@ void todolist::onAdd()
     m_pwPending->model()->insertRow(m_pwPending->model()->rowCount());
     QModelIndex oIndex = m_pwPending->model()->index(
                 m_pwPending->model()->rowCount() - 1, 0);
-    m_pwPending->edit(oIndex);
+    added++;
 }
 
 void todolist::onRemove()
 {
    QModelIndex oIndex = m_pwPending->currentIndex();
    m_pwPending->model()->removeRow(oIndex.row());
+
 }
+
+void todolist::onEdit()
+
+{
+    QModelIndex oIndex = m_pwPending->currentIndex();
+       if(added > edited++){//came from add
+           todos.push_back({oIndex.data().toString(), false});
+       }
+
+    qDebug() << oIndex.row();
+    qDebug() << oIndex.data().toString();
+
+}
+
+
