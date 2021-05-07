@@ -5,36 +5,43 @@
 #include <QListView>
 #include <QStringListModel>
 #include <QString>
-#include <vector>
+#include <QVector>
 #include <unordered_map>
+
+
+class my_data{
+public:
+    QVector<QString> todo;
+    QVector<QString> completed;
+};
+
+
 class todolist : public QMainWindow
 {
     Q_OBJECT
 public:
     todolist();
+    todolist(my_data data);
+    my_data data_;
 protected slots:
     void onAdd();
     void onRemove();
-    void onEdit();
 
 private:
+
+
     QListView* m_pwPending = nullptr;
     QListView* m_pwCompleted = nullptr;
 
     QAction* m_pActAdd = nullptr;
     QAction* m_pActRemove = nullptr;
-    QAction* m_pActEdit = nullptr;
 
-            std::vector<std::pair<QString, bool>> todos;
-            std::unordered_map<QString, size_t> todos1;
+
     //Qstring login;
             size_t added = 0;
             size_t edited = 0;
-
-
-
-
 };
+
 
 
 #endif // TODOLIST_H

@@ -7,19 +7,42 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include <iostream>
+
+
+
 class my_model : public QStringListModel{
+public:
+        todolist *list;
+    my_model(todolist *list_) : list(list_){}
+
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override{
+        qDebug() << rowCount()-1 << "80085";
+        if(destinationChild != rowCount()-1){
+            return 0;
+        }
         qDebug() << "in move rows";
+        qDebug() <<sourceRow;
+        qDebug() <<destinationChild;
+        auto change1 = list->data_.todo[sourceRow];
+        list->data_.todo.erase(list->data_.todo.begin() + sourceRow);
+        list->data_.todo.push_back(change1);
+        for(auto i : list->data_.todo){
+            qDebug() << i;
+        }
         return QStringListModel::moveRows(sourceParent, sourceRow, count, destinationParent, destinationChild);
     }
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override{
-        qDebug() << value.toString();
+//        qDebug() << value.toString();
+        list->data_.todo[index.row()] = value.toString();
+        for(auto i : list->data_.todo){
+            qDebug() << i;
+        }
+        qDebug() << "==================================";
         return QStringListModel::setData(index, value, Qt::EditRole);
     }
-
 };
 
-todolist::todolist() {
+todolist::todolist(my_data data) : data_(data){
     QWidget* pWidget = new QWidget(this);
     pWidget->setStyleSheet("background-color: #ECF0F1");
     setCentralWidget(pWidget);
@@ -60,8 +83,8 @@ todolist::todolist() {
     m_pwCompleted->setDefaultDropAction(Qt::MoveAction);
     pHLayout->addWidget(m_pwCompleted);
 
-    m_pwPending->setModel(new my_model());
-    m_pwCompleted->setModel(new my_model());
+    m_pwPending->setModel(new my_model(this));
+    m_pwCompleted->setModel(new my_model(this));
 
     m_pwPending->setStyleSheet
     ("QListView { font-size: 20pt; font-weight: bold; }"
@@ -86,13 +109,11 @@ todolist::todolist() {
     m_pActRemove->setIcon(QIcon(":/icons/images/delete.png"));
     connect(m_pActRemove, &QAction::triggered, this, &todolist::onRemove);
 
-    m_pActEdit = new QAction(this);
-    m_pActEdit->setIcon(QIcon(":/icons/images/edit.png"));
-    connect(m_pActEdit, &QAction::triggered, this, &todolist::onEdit);
+
 
     pToolBar->addAction(m_pActAdd);
     pToolBar->addAction(m_pActRemove);
-    pToolBar->addAction(m_pActEdit);
+
 
 }
 
@@ -104,26 +125,13 @@ void todolist::onAdd()
     m_pwPending->model()->insertRow(m_pwPending->model()->rowCount());
     QModelIndex oIndex = m_pwPending->model()->index(
                 m_pwPending->model()->rowCount() - 1, 0);
-    added++;
+    data_.todo.push_back("");
 }
 
 void todolist::onRemove()
 {
    QModelIndex oIndex = m_pwPending->currentIndex();
    m_pwPending->model()->removeRow(oIndex.row());
-
-}
-
-void todolist::onEdit()
-
-{
-    QModelIndex oIndex = m_pwPending->currentIndex();
-    if(added > edited++){//came from add
-           todos.push_back({oIndex.data().toString(), false});
-           todos1[oIndex.data().toString()] = added;
-    }
-    qDebug() << oIndex.row();
-    qDebug() << oIndex.data().toString();
 
 }
 
