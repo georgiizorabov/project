@@ -16,10 +16,10 @@ public:
     my_model(todolist *list_) : list(list_){}
 
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override{
-        qDebug() << rowCount()-1 << "80085";
-        if(destinationChild != rowCount()-1){
-            return 0;
-        }
+//        qDebug() << rowCount()-1 << "80085";
+//        if(destinationChild != rowCount()-1){
+//            return 0;
+//        }
         qDebug() << "in move rows";
         qDebug() <<sourceRow;
         qDebug() <<destinationChild;
@@ -132,6 +132,7 @@ void todolist::onRemove()
 {
    QModelIndex oIndex = m_pwPending->currentIndex();
    m_pwPending->model()->removeRow(oIndex.row());
+   data_.todo.erase(data_.todo.begin() + oIndex.row());
 
 }
 
