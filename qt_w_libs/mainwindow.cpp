@@ -7,6 +7,18 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include <iostream>
+class my_model : public QStringListModel{
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override{
+        qDebug() << "in move rows";
+        return QStringListModel::moveRows(sourceParent, sourceRow, count, destinationParent, destinationChild);
+    }
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override{
+        qDebug() << value.toString();
+        return QStringListModel::setData(index, value, Qt::EditRole);
+    }
+
+};
+
 todolist::todolist() {
     QWidget* pWidget = new QWidget(this);
     pWidget->setStyleSheet("background-color: #ECF0F1");
@@ -48,8 +60,8 @@ todolist::todolist() {
     m_pwCompleted->setDefaultDropAction(Qt::MoveAction);
     pHLayout->addWidget(m_pwCompleted);
 
-    m_pwPending->setModel(new QStringListModel());
-    m_pwCompleted->setModel(new QStringListModel());
+    m_pwPending->setModel(new my_model());
+    m_pwCompleted->setModel(new my_model());
 
     m_pwPending->setStyleSheet
     ("QListView { font-size: 20pt; font-weight: bold; }"
@@ -82,10 +94,10 @@ todolist::todolist() {
     pToolBar->addAction(m_pActRemove);
     pToolBar->addAction(m_pActEdit);
 
-
-
-
 }
+
+
+
 
 void todolist::onAdd()
 {
@@ -106,10 +118,10 @@ void todolist::onEdit()
 
 {
     QModelIndex oIndex = m_pwPending->currentIndex();
-       if(added > edited++){//came from add
+    if(added > edited++){//came from add
            todos.push_back({oIndex.data().toString(), false});
-       }
-
+           todos1[oIndex.data().toString()] = added;
+    }
     qDebug() << oIndex.row();
     qDebug() << oIndex.data().toString();
 
