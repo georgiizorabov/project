@@ -8,21 +8,35 @@
 #include <QBoxLayout>
 #include <iostream>
 
-
-
+class my_QListView : public QListView{
+public:
+    void dragMoveEvent(QDragMoveEvent *e) override{
+        qDebug() << "in drag move event";
+        QListView::dragMoveEvent(e);
+    }
+    void indexesMoved(const QModelIndexList &indexes){
+        qDebug() << "in indexdes moved";
+        for(auto i : indexes){
+            qDebug() << i;
+        }
+        QListView::indexesMoved(indexes);
+    }
+};
 class my_model : public QStringListModel{
 public:
-        todolist *list;
+    todolist *list;
     my_model(todolist *list_) : list(list_){}
-
+    bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override{
+        qDebug() << "in insert\t" << parent.row() << '\t' << parent.column() << '\t' << count << '\t' << row;
+//        if(parent.column())
+        return QStringListModel::insertRows(row,count,parent);
+    }
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override{
+        qDebug() << "in remove\t" << QModelIndex().column();
+        return QStringListModel::removeRows(row,count,parent);
+    }
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override{
-//        qDebug() << rowCount()-1 << "80085";
-//        if(destinationChild != rowCount()-1){
-//            return 0;
-//        }
-        qDebug() << "in move rows";
-        qDebug() <<sourceRow;
-        qDebug() <<destinationChild;
+        qDebug() << "in move rows\t" << sourceRow << '\t' << destinationChild;
         auto change1 = list->data_.todo[sourceRow];
         list->data_.todo.erase(list->data_.todo.begin() + sourceRow);
         list->data_.todo.push_back(change1);
@@ -32,7 +46,7 @@ public:
         return QStringListModel::moveRows(sourceParent, sourceRow, count, destinationParent, destinationChild);
     }
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override{
-//        qDebug() << value.toString();
+        qDebug() << "in setdata\t" << index.column() << '\t' << index.row();
         list->data_.todo[index.row()] = value.toString();
         for(auto i : list->data_.todo){
             qDebug() << i;
@@ -69,14 +83,14 @@ todolist::todolist(my_data data) : data_(data){
     QHBoxLayout* pHLayout = new QHBoxLayout();
     pMainLayout->addLayout(pHLayout);
 
-    m_pwPending = new QListView(this);
+    m_pwPending = new my_QListView();//(this)
     m_pwPending->setDragEnabled(true);
     m_pwPending->setAcceptDrops(true);
     m_pwPending->setDropIndicatorShown(true);
     m_pwPending->setDefaultDropAction(Qt::MoveAction);
     pHLayout->addWidget(m_pwPending);
 
-    m_pwCompleted = new QListView(this);
+    m_pwCompleted = new my_QListView();//(this)
     m_pwCompleted->setDragEnabled(true);
     m_pwCompleted->setAcceptDrops(true);
     m_pwCompleted->setDropIndicatorShown(true);
@@ -132,7 +146,9 @@ void todolist::onRemove()
 {
    QModelIndex oIndex = m_pwPending->currentIndex();
    m_pwPending->model()->removeRow(oIndex.row());
-   data_.todo.erase(data_.todo.begin() + oIndex.row());
+   if(!data_.todo.empty()){
+        data_.todo.erase(data_.todo.begin() + oIndex.row());
+   }
 
 }
 
