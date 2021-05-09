@@ -33,6 +33,7 @@ set(PROJECT_SOURCES
         mainwindow.h
         mainwindow.ui
         res.qrc
+        json.h
         server.h
 )
 

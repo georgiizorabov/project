@@ -17,12 +17,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
-    my_data data;
-
-    todolist app(data);
-
-
+    todolist app;
 
     app.show();
     return a.exec();

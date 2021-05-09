@@ -3,17 +3,13 @@
 
 #include <QMainWindow>
 #include <QListView>
+#include "json.h"
 #include <QStringListModel>
+#include <string>
 #include <QString>
 #include <QVector>
 #include <unordered_map>
 
-
-class my_data{
-public:
-    QVector<QString> todo;
-    QVector<QString> completed;
-};
 
 
 class todolist : public QMainWindow
@@ -21,14 +17,13 @@ class todolist : public QMainWindow
     Q_OBJECT
 public:
     todolist();
-    todolist(my_data data);
-    my_data data_;
+    ToDo_Json j;
 protected slots:
     void onAdd();
     void onRemove();
+    std::string change_json(QStringList &v, bool is_completed);
 
 private:
-
 
     QListView* m_pwPending = nullptr;
     QListView* m_pwCompleted = nullptr;
