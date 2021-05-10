@@ -176,15 +176,22 @@ void todolist::to_list(){
     QStringList list_p;
     for (auto& element : j.j.items()) {
         if(element.key() == "Completed"){
-            qDebug() << element.value().dump().c_str();
+            list_c.append(element.value().dump().c_str());          
+        }
+        if(element.key() == "InProgress"){
+            list_p.append(element.value().dump().c_str());          
         }
 //      list_c.append(element["Completed"]);
-////      qDebug() << element.value();
+//      qDebug() << element.value();
 //      std::cout << element.value();
 //    }
 //    for (json::iterator it = j.j["Completed"].begin(); it != j.j["Completed"].end(); ++it) {
 //      std::cout  << it.key() << " : " << it.value() << "\n";
     }
+    m_pwPending->setModel(new my_model(list_c, false));
+
+    m_pwPending->model();
+    m_pwCompleted->setModel(new my_model(this, true));
 }
 
 void todolist::onLogin()

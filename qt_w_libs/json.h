@@ -15,9 +15,8 @@
 using nlohmann::json;
 
 struct ToDo_Json {
-private:
-    json j;
 public:
+    json j;
     ToDo_Json() = default;
     ToDo_Json(ToDo_Json &&) = default;
     ToDo_Json(const ToDo_Json &) = default;

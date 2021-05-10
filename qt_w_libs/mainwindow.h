@@ -23,6 +23,7 @@ protected slots:
     void onAdd();
     void onRemove();
     void onLogin();
+    void to_list();
 
 
 private:
