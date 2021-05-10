@@ -2,6 +2,6 @@
     <qresource prefix="/icons">
         <file>images/add.png</file>
         <file>images/delete.png</file>
-        <file>images/edit.png</file>
+        <file>images/login.png</file>
     </qresource>
 </RCC>

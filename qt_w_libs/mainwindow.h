@@ -9,7 +9,7 @@
 #include <QString>
 #include <QVector>
 #include <unordered_map>
-
+#include <QString>
 
 
 class todolist : public QMainWindow
@@ -18,10 +18,12 @@ class todolist : public QMainWindow
 public:
     todolist();
     ToDo_Json j;
+    void change_json(QStringList v, bool is_completed);
 protected slots:
     void onAdd();
     void onRemove();
-    std::string change_json(QStringList &v, bool is_completed);
+    void onLogin();
+
 
 private:
 
@@ -29,10 +31,11 @@ private:
     QListView* m_pwCompleted = nullptr;
 
     QAction* m_pActAdd = nullptr;
+    QAction* m_pActLogin = nullptr;
     QAction* m_pActRemove = nullptr;
 
 
-    //Qstring login;
+    QString login;
             size_t added = 0;
             size_t edited = 0;
 };

@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include <iostream>
+#include <QInputDialog>
 
 void print_vec(QStringList v, bool is_completed){
     qDebug() << "==============\nis completed:\t" << is_completed << "\n";
@@ -45,26 +46,26 @@ public:
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override{
         qDebug() << "in insert\t" << parent.row() << '\t' << parent.column() << '\t' << count << '\t' << row;
         bool return_value =  QStringListModel::insertRows(row,count,parent);
-        list->j.change(my_model::stringList(), is_completed); // вот тут написано что мы меняем в туду json
+        list->change_json(my_model::stringList(), is_completed); // вот тут написано что мы меняем в туду json
         return return_value;
     }
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override{
         qDebug() << "in remove\t" << QModelIndex().column();
         bool return_value =  QStringListModel::removeRows(row,count,parent);
-        list->j.change(my_model::stringList(), is_completed); // вот тут написано что мы меняем в туду json
+        list->change_json(my_model::stringList(), is_completed); // вот тут написано что мы меняем в туду json
         return return_value;
     }
     bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override{
         qDebug() << "in move rows\t" << sourceRow << '\t' << destinationChild;
         print_vec(my_model::stringList(), 0);
         bool return_value =   QStringListModel::moveRows(sourceParent, sourceRow, count, destinationParent, destinationChild);
-        list->j.change(my_model::stringList(), is_completed); // вот тут написано что мы меняем в туду json
+        list->change_json(my_model::stringList(), is_completed); // вот тут написано что мы меняем в туду json
         return return_value;
     }
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override{
         qDebug() << "in setdata\t" << index.column() << '\t' << index.row();
         bool return_value = QStringListModel::setData(index, value, role);
-        list->j.change(my_model::stringList(), is_completed); // вот тут написано что мы меняем в туду json
+        list->change_json(my_model::stringList(), is_completed); // вот тут написано что мы меняем в туду json
         return return_value;
     }
 };
@@ -136,10 +137,15 @@ todolist::todolist() {
     m_pActRemove->setIcon(QIcon(":/icons/images/delete.png"));
     connect(m_pActRemove, &QAction::triggered, this, &todolist::onRemove);
 
+    m_pActLogin = new QAction(this);
+    m_pActLogin->setIcon(QIcon(":/icons/images/login.png"));
+    connect(m_pActLogin, &QAction::triggered, this, &todolist::onLogin);
+
 
 
     pToolBar->addAction(m_pActAdd);
     pToolBar->addAction(m_pActRemove);
+    pToolBar->addAction(m_pActLogin);
 
 
 }
@@ -154,9 +160,9 @@ void todolist::onAdd()
                 m_pwPending->model()->rowCount() - 1, 0);
 }
 
-std::string todolist::change_json(QStringList &v, bool is_completed){
+void todolist::change_json(QStringList v, bool is_completed){
     j.change(v, is_completed);
-    return j.to_str_json();
+    put_on_server(login.toStdString(), j.to_str_json());
 }
 
 void todolist::onRemove()
@@ -166,4 +172,12 @@ void todolist::onRemove()
 
 }
 
+void todolist::onLogin()
+{
+        QString text = QInputDialog::getText(this, tr("Input your username"),
+                                             tr("User name:"), QLineEdit::Normal);
+        if (!text.isEmpty())
+            login = text;
+    qDebug() << login;
+}
 
