@@ -27,7 +27,6 @@ protected slots:
 
 
 private:
-
     QListView* m_pwPending = nullptr;
     QListView* m_pwCompleted = nullptr;
 

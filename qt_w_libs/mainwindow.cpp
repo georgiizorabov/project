@@ -174,17 +174,20 @@ void todolist::onRemove()
 void todolist::to_list(){
     QStringList list_c;
     QStringList list_p;
-    for (auto& element : j.j.items()) {
-        if(element.key() == "Completed"){
-            qDebug() << element.value().dump().c_str();
-        }
-//      list_c.append(element["Completed"]);
-////      qDebug() << element.value();
-//      std::cout << element.value();
-//    }
-//    for (json::iterator it = j.j["Completed"].begin(); it != j.j["Completed"].end(); ++it) {
-//      std::cout  << it.key() << " : " << it.value() << "\n";
+    for (auto& element : j.j["Completed"].items()) {
+        std::string str = element.value().dump(4).c_str();
+        list_c << str.substr(1, str.size() - 2).c_str();
     }
+    for (auto& element : j.j["InProgress"].items()) {
+        std::string str = element.value().dump(4).c_str();
+        list_p << str.substr(1, str.size() - 2).c_str();
+    }
+    my_model *completed_model = new my_model(this, true); // valgrind
+    completed_model->setStringList(list_c);
+    m_pwCompleted->setModel(completed_model);
+    my_model *progress_model = new my_model(this, false); // valg   nd
+    progress_model->setStringList(list_p);
+    m_pwPending->setModel(progress_model);
 }
 
 void todolist::onLogin()
