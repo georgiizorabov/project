@@ -80,7 +80,7 @@ todolist::todolist() {
     QVBoxLayout* pMainLayout = new QVBoxLayout();
     pWidget->setLayout(pMainLayout);
 
-    QLabel* pwTitle = new QLabel("TO DO LIST", this);
+    QLabel* pwTitle = new QLabel("ToDoLister", this);
     pMainLayout->addWidget(pwTitle);
     pwTitle->setAlignment(Qt::AlignCenter);
     pwTitle->setStyleSheet("font-size: 30pt; margin: 10%");
@@ -117,16 +117,16 @@ todolist::todolist() {
     m_pwCompleted->setModel(new my_model(this, true));
 
     m_pwPending->setStyleSheet
-    ("QListView { font-size: 20pt; font-weight: bold; }"
-     "QListView::item { background-color: #E74C3C; padding: 10%;"
-     "border: 1px solid #C0392B; }"
-     "QListView::item::hover { background-color: #C0392B }");
+    ("QListView { font-size: 20pt; font-weight: bold;}"
+     "QListView::item { background-color: #ffffff; padding: 10%;"
+     "border: 2px solid #C0392B; border-radius: 10px; color: #000000; }"
+     "QListView::item::hover { background-color: #ffffff }");
 
     m_pwCompleted->setStyleSheet
     ("QListView { font-size: 20pt; font-weight: bold; }"
-     "QListView::item { background-color: #2ECC71; padding: 10%;"
-     "border: 1px solid #27AE60; }"
-     "QListView::item::hover { background-color: #27AE60 }");
+     "QListView::item { background-color: #ffffff; padding: 10%;"
+     "border: 2px solid #27AE60 ;border-radius: 10px; color: #000000; }"
+     "QListView::item::hover { background-color: #ffffff }");
 
     QToolBar* pToolBar = new QToolBar(this);
     addToolBar(pToolBar);
