@@ -5,6 +5,8 @@
 #include <QLabel>
 #include <QDebug>
 #include <QToolBar>
+#include <QFuture>
+#include <QtConcurrent/QtConcurrent>
 #include <QPushButton>
 #include <QBoxLayout>
 #include <iostream>
@@ -162,7 +164,8 @@ void todolist::onAdd()
 
 void todolist::change_json(QStringList v, bool is_completed){
     j.change(v, is_completed);
-    put_on_server(login.toStdString(), j.to_str_json());
+    //extern void put_on_server();
+    QFuture<void> future = QtConcurrent::run(put_on_server, login.toStdString(), j.to_str_json());
 }
 
 void todolist::onRemove()
