@@ -10,6 +10,7 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include <iostream>
+#include <QTextEdit>
 #include <QInputDialog>
 
 void print_vec(QStringList v, bool is_completed){
@@ -73,8 +74,11 @@ public:
 };
 
 todolist::todolist() {
+    QTextEdit *txt = new QTextEdit();
+    txt->setMarkdown("[link](sdfsdfdsf.ru)");
+    txt->show();
     QWidget* pWidget = new QWidget(this);
-    pWidget->setStyleSheet("background-color: #ECF0F1");
+    pWidget->setStyleSheet("background-color: white");
     setCentralWidget(pWidget);
 
     QVBoxLayout* pMainLayout = new QVBoxLayout();
@@ -83,7 +87,7 @@ todolist::todolist() {
     QLabel* pwTitle = new QLabel("ToDoLister", this);
     pMainLayout->addWidget(pwTitle);
     pwTitle->setAlignment(Qt::AlignCenter);
-    pwTitle->setStyleSheet("font-size: 30pt; margin: 10%");
+    pwTitle->setStyleSheet("font-size: 30pt; margin: 10%;");
 
     QHBoxLayout* pHLayoutLabels = new QHBoxLayout();
     pMainLayout->addLayout(pHLayoutLabels);
@@ -117,15 +121,15 @@ todolist::todolist() {
     m_pwCompleted->setModel(new my_model(this, true));
 
     m_pwPending->setStyleSheet
-    ("QListView { font-size: 20pt; font-weight: bold;}"
+    ("QListView { font-size: 20pt; font-weight: bold; border: 0px }"
      "QListView::item { background-color: #ffffff; padding: 10%;"
-     "border: 2px solid #C0392B; border-radius: 10px; color: #000000; }"
+     "border: 2px solid #C0392B; border-radius: 10px; color: #000000; margin-bottom: 1px; box-shadow: 0 8px 6px -6px black; }"
      "QListView::item::hover { background-color: #ffffff }");
 
     m_pwCompleted->setStyleSheet
-    ("QListView { font-size: 20pt; font-weight: bold; }"
+    ("QListView { font-size: 20pt; font-weight: bold; border: 0px }"
      "QListView::item { background-color: #ffffff; padding: 10%;"
-     "border: 2px solid #27AE60 ;border-radius: 10px; color: #000000; }"
+     "border: 2px solid #27AE60 ;border-radius: 10px; color: #000000; margin-bottom: 1px; box-shadow: 0 8px 6px -6px black; }"
      "QListView::item::hover { background-color: #ffffff }");
 
     QToolBar* pToolBar = new QToolBar(this);
