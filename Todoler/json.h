@@ -10,7 +10,17 @@
 #include <QToolBar>
 #include <QPushButton>
 #include <QBoxLayout>
-#include <iostream>
+#include <QModelIndex>
+#include <QAbstractItemModel>
+
+//void forEach(QAbstractItemModel* model, QModelIndex parent = QModelIndex()) {
+//    for(int r = 0; r < model->rowCount(parent); ++r) {
+//        QModelIndex index = model->index(r, 0, parent);
+//        QVariant name = model->data(index);
+//        qDebug() << name.toString() << '\t';
+//        qDebug() << index.data(Qt::UserRole).toString() << '\n';
+//    }
+//}
 
 using nlohmann::json;
 
@@ -30,17 +40,22 @@ public:
     std::string to_str_json(){
         return j.dump(4);
     }
-    void change(QStringList v, bool is_completed){
-        if (is_completed){
-            j["Completed"].clear();
-            for(auto &i : v){
-                j["Completed"].push_back(i.toUtf8().constData());
-            }
-        } else {
-            j["InProgress"].clear();
-            for(auto &i : v){
-                j["InProgress"].push_back(i.toUtf8().constData());
-            }
+    void update_completed(QAbstractItemModel* model, QModelIndex parent = QModelIndex()){
+        j["Completed"].clear();
+        for(int r = 0; r < model->rowCount(parent); ++r) {
+            QModelIndex index = model->index(r, 0, parent);
+            QVariant name = model->data(index);
+            j["Completed"].push_back({name.toString().toUtf8().constData(), index.data(Qt::UserRole).toString().toUtf8().constData()});
         }
+        qDebug(j.dump(4).c_str());
+    }
+    void update_in_progress(QAbstractItemModel* model, QModelIndex parent = QModelIndex()){
+        j["Progress"].clear();
+        for(int r = 0; r < model->rowCount(parent); ++r) {
+            QModelIndex index = model->index(r, 0, parent);
+            QVariant name = model->data(index);
+            j["Progress"].push_back({name.toString().toUtf8().constData(), index.data(Qt::UserRole).toString().toUtf8().constData()});
+        }
+        qDebug(j.dump(4).c_str());
     }
 };
