@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/pix">
+	<file>images/icons/add.png</file>
+x-special/nautilus-clipboard
+copy
+file:///home/slawa4s/project/Todoler/images/icons/48/add.png
+file:///home/slawa4s/project/Todoler/images/icons/48/delete.png
+file:///home/slawa4s/project/Todoler/images/icons/48/error.png
+file:///home/slawa4s/project/Todoler/images/icons/48/information.png
+file:///home/slawa4s/project/Todoler/images/icons/48/login.png
+file:///home/slawa4s/project/Todoler/images/icons/48/warning.png
+	
+        <file>images/icons/error.png</file>
+        <file>images/icons/information.png</file>
+        <file>images/icons/warning.png</file>
+    </qresource>
+</RCC>
