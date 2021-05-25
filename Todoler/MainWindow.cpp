@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	auto *cmbType = new QComboBox(this);
 	auto *editMessage = new QLineEdit(this);
 	auto *btnPost = new QPushButton(tr("Post"), this);
+    auto *btnSendCompleted = new QPushButton(tr("Completed"), this);
     auto *btnDeletePending = new QPushButton(tr("Delete Pending"), this);
     auto *btnDeleteComleted = new QPushButton(tr("Delete All Comleted"), this);
 
@@ -105,29 +106,30 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug("Row 1 selected");
 
-//    messageList->addMessage(tr("This is some text of an info message"),
-//                            QPixmap(":/pix/images/icons/information.png"),
-//                            QDateTime::currentDateTime(), 0, this);
-//    messageList->addMessage(tr("This is some text of a warning message"),
-//                            QPixmap(":/pix/images/icons/warning.png"),
-//                            QDateTime::currentDateTime(), 0, this);
-//    messageList->addMessage(tr("This is some text of an error message"),
-//                            QPixmap(":/pix/images/icons/error.png"),
-//                            QDateTime::currentDateTime(), 0, this);
-//    CompletedList->addMessage(tr("This is some text of an info message"),
-//                            QPixmap(":/pix/images/icons/information.png"),
-//                            QDateTime::currentDateTime(), 1, this);
-//    CompletedList->addMessage(tr("This is some text of a warning message"),
-//                            QPixmap(":/pix/images/icons/warning.png"),
-//                            QDateTime::currentDateTime(), 1, this);
-//    CompletedList->addMessage(tr("This is some text of an error message"),
-//                            QPixmap(":/pix/images/icons/error.png"),
-//                            QDateTime::currentDateTime(), 1, this);
-    //pToolBar->addAction(btnDeletePending);
+    messageList->addMessage(tr("This is some text of an info message"),
+                            QPixmap(":/pix/images/icons/information.png"),
+                            QDateTime::currentDateTime(), 0, this);
+    messageList->addMessage(tr("This is some text of a warning message"),
+                            QPixmap(":/pix/images/icons/warning.png"),
+                            QDateTime::currentDateTime(), 0, this);
+    messageList->addMessage(tr("This is some text of an error message"),
+                            QPixmap(":/pix/images/icons/error.png"),
+                            QDateTime::currentDateTime(), 0, this);
+    CompletedList->addMessage(tr("This is some text of an info message"),
+                            QPixmap(":/pix/images/icons/information.png"),
+                            QDateTime::currentDateTime(), 1, this);
+    CompletedList->addMessage(tr("This is some text of a warning message"),
+                            QPixmap(":/pix/images/icons/warning.png"),
+                            QDateTime::currentDateTime(), 1, this);
+    CompletedList->addMessage(tr("This is some text of an error message"),
+                            QPixmap(":/pix/images/icons/error.png"),
+                            QDateTime::currentDateTime(), 1, this);
+//    pToolBar->addAction(btnDeletePending);
     layoutMain->addWidget(pToolBar);
 	layoutMain->addWidget(groupAdd);
 	layoutMain->addWidget(messageList);
     layoutMain->addWidget(btnDeletePending);
+    layoutMain->addWidget(btnSendCompleted);
     layoutMain->addWidget(CompletedList);
     layoutMain->addWidget(btnDeleteComleted);
 
@@ -140,8 +142,16 @@ MainWindow::MainWindow(QWidget *parent) :
 								cmbType->itemIcon(cmbType->currentIndex())
 								.pixmap(48, 48),
                                 QDateTime::currentDateTime(), 0, a);
-	});
+    });
+    connect(btnSendCompleted, &QPushButton::clicked, [messageList, CompletedList, a = this](){
+        QModelIndex index = messageList->currentIndex();
+        QVariant name = messageList->model()->data(index);
+        CompletedList->addMessage(tr(name.toString().toUtf8().constData()),
+                                QPixmap(":/pix/images/icons/error.png"),
+                                QDateTime::fromString(index.data(Qt::UserRole).toString().toUtf8().constData(), "yyyy-MM-dd hh:mm"), 1, a);
+        messageList->clear_on_index(a);
 
+    });
     connect(btnDeletePending, &QPushButton::clicked, [messageList, a = this](){
         messageList->clear_on_index(a);
     });

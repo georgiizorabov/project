@@ -5,6 +5,7 @@
 #include "json.h"
 #include <QStringListModel>
 #include <QFuture>
+#include <QInputDialog>
 #include <QtConcurrent/QtConcurrent>
 #include <cpr/cpr.h>
 
@@ -69,12 +70,24 @@ MessageList::MessageList(QWidget *parent) :
 void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
                              const QDateTime &dateTime, bool is_c, MainWindow *daddy, bool change_json)
 {
-	auto *item = new QStandardItem(QIcon(pixmap), text);
-
-	item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-    item->setData(dateTime.toString("yyyy-MM-dd hh:mm"), Qt::UserRole);
-
-	static_cast<QStandardItemModel *>(model())->appendRow(item);
+    auto *item = new QStandardItem(QIcon(pixmap), text);
+    if (change_json){
+        QString deadline = "";
+//        QDateTime my_date;
+//        while (my_date.isNull()) {
+//            QInputDialog my_dialog;
+//            my_dialog.setMinimumWidth(750);
+//            deadline = my_dialog.getText(this, tr("Input deadine in format: \"yyyy-MM-dd hh:mm\""),
+//                                                 tr("Deadline: "), QLineEdit::Normal);
+//            my_date = QDateTime::fromString(deadline, "yyyy-MM-dd hh:mm");
+//        }
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        item->setData(dateTime, Qt::UserRole);
+    } else {
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        item->setData(dateTime, Qt::UserRole);
+    }
+    static_cast<QStandardItemModel *>(model())->appendRow(item);
 	scrollToBottom();
     if (change_json){
     if (is_c){
@@ -90,9 +103,8 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
 void MessageList::clearAll(MainWindow *daddy)
 {
 	static_cast<QStandardItemModel *>(model())->clear();
-
-        daddy->j.update_completed(this->model());
-        QFuture<void> future = QtConcurrent::run(first_put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
+    daddy->j.update_completed(this->model());
+    QFuture<void> future = QtConcurrent::run(first_put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
 
 }
 
@@ -102,5 +114,9 @@ void MessageList::clear_on_index(MainWindow *daddy)
     this->model()->removeRow(oIndex.row());
     daddy->j.update_in_progress(this->model());
     QFuture<void> future = QtConcurrent::run(first_put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
+
+}
+
+void MessageList::send_to_completed(MainWindow *daddy){
 
 }
