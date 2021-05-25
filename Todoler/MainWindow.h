@@ -4,6 +4,8 @@
 #include <QWidget>
 #include "json.h"
 
+class MessageList;
+
 class MainWindow : public QWidget
 {
 	Q_OBJECT
@@ -13,8 +15,8 @@ private:
 public:
     ToDo_Json j;
     QString get_username() const;
-    void set_username(/*MessageList *ml,  MessageList* cl*/);
-    void to_list(/*MessageList *ml,  MessageList* cl*/);
+    void set_username(MessageList *ml,  MessageList* cl);
+    void to_list(MessageList *ml,  MessageList* cl);
     QAction *get_login = nullptr;
 	explicit MainWindow(QWidget *parent = nullptr);
 };

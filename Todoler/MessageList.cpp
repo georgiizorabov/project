@@ -4,9 +4,41 @@
 #include <QDateTime>
 #include "json.h"
 #include <QStringListModel>
-#include "server.h"
 #include <QFuture>
 #include <QtConcurrent/QtConcurrent>
+#include <cpr/cpr.h>
+
+std::string first_myurlEncode(std::string str){
+    std::string new_str = "";
+    char c;
+    int ic;
+    const char* chars = str.c_str();
+    char bufHex[10];
+    int len = strlen(chars);
+
+    for(int i=0;i<len;i++){
+        c = chars[i];
+        ic = c;
+        // uncomment this if you want to encode spaces with +
+        /*if (c==' ') new_str += '+';
+        else */if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') new_str += c;
+        else {
+            sprintf(bufHex,"%X",c);
+            if(ic < 16)
+                new_str += "%0";
+            else
+                new_str += "%";
+            new_str += bufHex;
+        }
+    }
+    return new_str;
+}
+
+void first_put_on_server(const std::string& name, const std::string& info) {
+    qDebug() << "in put on server";
+    std::string url = "https://rest-api-python.goshazorabov.repl.co/api/add/" + first_myurlEncode(name) + "/" + first_myurlEncode(info);
+    cpr::Response r = cpr::Get(cpr::Url{url}, cpr::VerifySsl{false});
+}
 
 MessageList::MessageList(QWidget *parent) :
 	QListView(parent)
@@ -35,7 +67,7 @@ MessageList::MessageList(QWidget *parent) :
 }
 
 void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
-                             const QDateTime &dateTime, bool is_c, MainWindow *daddy)
+                             const QDateTime &dateTime, bool is_c, MainWindow *daddy, bool change_json)
 {
 	auto *item = new QStandardItem(QIcon(pixmap), text);
 
@@ -44,12 +76,14 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
 
 	static_cast<QStandardItemModel *>(model())->appendRow(item);
 	scrollToBottom();
+    if (change_json){
     if (is_c){
         daddy->j.update_completed(this->model());
     } else {
         daddy->j.update_in_progress(this->model());
     }
-    QFuture<void> future = QtConcurrent::run(put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
+    }
+    QFuture<void> future = QtConcurrent::run(first_put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
 
 }
 
@@ -58,6 +92,8 @@ void MessageList::clearAll(MainWindow *daddy)
 	static_cast<QStandardItemModel *>(model())->clear();
 
         daddy->j.update_completed(this->model());
+        QFuture<void> future = QtConcurrent::run(first_put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
+
 }
 
 void MessageList::clear_on_index(MainWindow *daddy)
@@ -65,4 +101,6 @@ void MessageList::clear_on_index(MainWindow *daddy)
     QModelIndex oIndex = this->currentIndex();
     this->model()->removeRow(oIndex.row());
     daddy->j.update_in_progress(this->model());
+    QFuture<void> future = QtConcurrent::run(first_put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
+
 }

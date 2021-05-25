@@ -19,21 +19,23 @@
 #include <iostream>
 #include <QInputDialog>
 #include "server.h"
+#include <cpr/cpr.h>
+
 QString MainWindow::get_username() const {
     return username;
 }
 
-void MainWindow::set_username(/*MessageList *ml,  MessageList* cl*/) {
+void MainWindow::set_username(MessageList *ml,  MessageList* cl) {
         QString text = QInputDialog::getText(this, tr("Input your username"),
                                              tr("User name:"), QLineEdit::Normal);
        if (!text.isEmpty()){
             username = text;
             j.j["username"] = username.toStdString();
             j.j = json::parse(get_from_server(username.toStdString())); //Передть строку из сервера
-            qDebug() << j.to_str_json().c_str(); // проверка
-            to_list(/*ml, cl*/);
+            qDebug() << "===============\n" << j.to_str_json().c_str(); // проверка
+            to_list(ml, cl);
         }
-       if(j.j["email"] == NULL){ //check if email already exists
+       if(j.j["email"] != NULL){ //check if email already exists
            return;
        }
        QString text1 = QInputDialog::getText(this, tr("Input your email"),
@@ -46,18 +48,22 @@ void MainWindow::set_username(/*MessageList *ml,  MessageList* cl*/) {
        qDebug() << j.j.dump(4).c_str();
 }
 
-void MainWindow::to_list(/*MessageList *ml,  MessageList* cl*/) {
+void MainWindow::to_list(MessageList *ml,  MessageList* cl) {
     for (auto& element : j.j["Progress"].items()) {
         std::string todo = element.value()[0].dump(4);
         std::string date = element.value()[1].dump(4);
-        qDebug(todo.substr(1, todo.size() - 2).c_str());
-        qDebug(date.substr(1, date.size() - 2).c_str());
+//        qDebug() << todo.substr(1, todo.size() - 2).c_str() << "\t" << date.substr(1, date.size() - 2).c_str();
+        ml->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
+                                    QPixmap(":/pix/images/icons/information.png"),
+                                    QDateTime::fromString(date.substr(1, date.size() - 2).c_str(), "yyyy-MM-dd hh:mm"), 0, this, false);
     }
     for (auto& element : j.j["Completed"].items()) {
         std::string todo = element.value()[0].dump(4);
         std::string date = element.value()[1].dump(4);
-        qDebug(todo.substr(1, todo.size() - 2).c_str());
-        qDebug(date.substr(1, date.size() - 2).c_str());
+//        qDebug() << todo.substr(1, todo.size() - 2).c_str() << "\t" << date.substr(1, date.size() - 2).c_str();
+        cl->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
+                                    QPixmap(":/pix/images/icons/information.png"),
+                                    QDateTime::fromString(date.substr(1, date.size() - 2).c_str(), "yyyy-MM-dd hh:mm"), 1, this, false);
     }
 }
 
@@ -80,7 +86,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     get_login = new QAction(this);
     get_login->setIcon(QIcon(":/pix/images/icons/login.png"));
-    connect(get_login, &QAction::triggered, this, &MainWindow::set_username);
+    connect(get_login, &QAction::triggered, this, [CompletedList, messageList, this](){
+            MainWindow::set_username(messageList, CompletedList);
+    });
     pToolBar->addAction(get_login);
     cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/information.png")),
                      "inf");
@@ -100,10 +108,10 @@ MainWindow::MainWindow(QWidget *parent) :
 //    messageList->addMessage(tr("This is some text of an info message"),
 //                            QPixmap(":/pix/images/icons/information.png"),
 //                            QDateTime::currentDateTime(), 0, this);
-//	messageList->addMessage(tr("This is some text of a warning message"),
+//    messageList->addMessage(tr("This is some text of a warning message"),
 //                            QPixmap(":/pix/images/icons/warning.png"),
 //                            QDateTime::currentDateTime(), 0, this);
-//	messageList->addMessage(tr("This is some text of an error message"),
+//    messageList->addMessage(tr("This is some text of an error message"),
 //                            QPixmap(":/pix/images/icons/error.png"),
 //                            QDateTime::currentDateTime(), 0, this);
 //    CompletedList->addMessage(tr("This is some text of an info message"),
@@ -134,8 +142,10 @@ MainWindow::MainWindow(QWidget *parent) :
                                 QDateTime::currentDateTime(), 0, a);
 	});
 
-    connect(btnDeletePending, &QPushButton::clicked, messageList,
-            &MessageList::clear_on_index);
-    connect(btnDeleteComleted, &QPushButton::clicked, CompletedList,
-            &MessageList::clearAll);
+    connect(btnDeletePending, &QPushButton::clicked, [messageList, a = this](){
+        messageList->clear_on_index(a);
+    });
+    connect(btnDeleteComleted, &QPushButton::clicked, [CompletedList, a = this](){
+        CompletedList->clearAll(a);
+    });
 }
