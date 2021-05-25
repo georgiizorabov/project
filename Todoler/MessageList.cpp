@@ -4,6 +4,9 @@
 #include <QDateTime>
 #include "json.h"
 #include <QStringListModel>
+#include "server.h"
+#include <QFuture>
+#include <QtConcurrent/QtConcurrent>
 
 MessageList::MessageList(QWidget *parent) :
 	QListView(parent)
@@ -46,15 +49,20 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
     } else {
         daddy->j.update_in_progress(this->model());
     }
+    QFuture<void> future = QtConcurrent::run(put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
+
 }
 
-void MessageList::clearAll()
+void MessageList::clearAll(MainWindow *daddy)
 {
 	static_cast<QStandardItemModel *>(model())->clear();
+
+        daddy->j.update_completed(this->model());
 }
 
-void MessageList::clear_on_index()
+void MessageList::clear_on_index(MainWindow *daddy)
 {
     QModelIndex oIndex = this->currentIndex();
     this->model()->removeRow(oIndex.row());
+    daddy->j.update_in_progress(this->model());
 }

@@ -18,7 +18,7 @@
 #include <QBoxLayout>
 #include <iostream>
 #include <QInputDialog>
-
+#include "server.h"
 QString MainWindow::get_username() const {
     return username;
 }
@@ -28,10 +28,22 @@ void MainWindow::set_username(/*MessageList *ml,  MessageList* cl*/) {
                                              tr("User name:"), QLineEdit::Normal);
        if (!text.isEmpty()){
             username = text;
-            //j.j = json::parse(get_from_server(username.toStdString())); Передть строку из сервера
-            //qDebug() << j.to_str_json().c_str(); // проверка
+            j.j["username"] = username.toStdString();
+            j.j = json::parse(get_from_server(username.toStdString())); //Передть строку из сервера
+            qDebug() << j.to_str_json().c_str(); // проверка
             to_list(/*ml, cl*/);
         }
+       if(j.j["email"] == NULL){ //check if email already exists
+           return;
+       }
+       QString text1 = QInputDialog::getText(this, tr("Input your email"),
+                                            tr("User email:"), QLineEdit::Normal);
+       if (!text1.isEmpty()){
+            email = text1;
+            j.j["email"] = email.toStdString();
+       }
+
+       qDebug() << j.j.dump(4).c_str();
 }
 
 void MainWindow::to_list(/*MessageList *ml,  MessageList* cl*/) {
@@ -85,24 +97,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug("Row 1 selected");
 
-    messageList->addMessage(tr("This is some text of an info message"),
-                            QPixmap(":/pix/images/icons/information.png"),
-                            QDateTime::currentDateTime(), 0, this);
-	messageList->addMessage(tr("This is some text of a warning message"),
-                            QPixmap(":/pix/images/icons/warning.png"),
-                            QDateTime::currentDateTime(), 0, this);
-	messageList->addMessage(tr("This is some text of an error message"),
-                            QPixmap(":/pix/images/icons/error.png"),
-                            QDateTime::currentDateTime(), 0, this);
-    CompletedList->addMessage(tr("This is some text of an info message"),
-                            QPixmap(":/pix/images/icons/information.png"),
-                            QDateTime::currentDateTime(), 1, this);
-    CompletedList->addMessage(tr("This is some text of a warning message"),
-                            QPixmap(":/pix/images/icons/warning.png"),
-                            QDateTime::currentDateTime(), 1, this);
-    CompletedList->addMessage(tr("This is some text of an error message"),
-                            QPixmap(":/pix/images/icons/error.png"),
-                            QDateTime::currentDateTime(), 1, this);
+//    messageList->addMessage(tr("This is some text of an info message"),
+//                            QPixmap(":/pix/images/icons/information.png"),
+//                            QDateTime::currentDateTime(), 0, this);
+//	messageList->addMessage(tr("This is some text of a warning message"),
+//                            QPixmap(":/pix/images/icons/warning.png"),
+//                            QDateTime::currentDateTime(), 0, this);
+//	messageList->addMessage(tr("This is some text of an error message"),
+//                            QPixmap(":/pix/images/icons/error.png"),
+//                            QDateTime::currentDateTime(), 0, this);
+//    CompletedList->addMessage(tr("This is some text of an info message"),
+//                            QPixmap(":/pix/images/icons/information.png"),
+//                            QDateTime::currentDateTime(), 1, this);
+//    CompletedList->addMessage(tr("This is some text of a warning message"),
+//                            QPixmap(":/pix/images/icons/warning.png"),
+//                            QDateTime::currentDateTime(), 1, this);
+//    CompletedList->addMessage(tr("This is some text of an error message"),
+//                            QPixmap(":/pix/images/icons/error.png"),
+//                            QDateTime::currentDateTime(), 1, this);
     //pToolBar->addAction(btnDeletePending);
     layoutMain->addWidget(pToolBar);
 	layoutMain->addWidget(groupAdd);
@@ -113,10 +125,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    forEach(messageList->model());
 
-	resize(640, 480);
-	connect(btnPost, &QPushButton::clicked, [messageList, cmbType,
+    resize(640, 480);
+    connect(btnPost, &QPushButton::clicked, [messageList, cmbType,
             editMessage, a = this](){
-		messageList->addMessage(editMessage->text(),
+        messageList->addMessage(editMessage->text(),
 								cmbType->itemIcon(cmbType->currentIndex())
 								.pixmap(48, 48),
                                 QDateTime::currentDateTime(), 0, a);

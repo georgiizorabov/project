@@ -13,8 +13,8 @@ public:
     QAction *get_username = nullptr;
 public slots:
     void addMessage(const QString &text, const QPixmap &pixmap, const QDateTime &dateTime, bool is_c, MainWindow *daddy);
-    void clear_on_index();
-	void clearAll();
+    void clear_on_index(MainWindow *daddy);
+    void clearAll(MainWindow *daddy);
 };
 
 #endif // MESSAGELIST_H

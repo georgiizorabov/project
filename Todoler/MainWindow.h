@@ -9,6 +9,7 @@ class MainWindow : public QWidget
 	Q_OBJECT
 private:
     QString username;
+    QString email;
 public:
     ToDo_Json j;
     QString get_username() const;
