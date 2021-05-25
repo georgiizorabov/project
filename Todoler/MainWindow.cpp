@@ -35,13 +35,14 @@ void MainWindow::set_username(MessageList *ml,  MessageList* cl) {
             qDebug() << "===============\n" << j.to_str_json().c_str(); // проверка
             to_list(ml, cl);
         }
-       if(j.j["email"] != NULL){ //check if email already exists
+       if(j.j["email"] != ""){ //check if email already exists
            return;
        }
        QString text1 = QInputDialog::getText(this, tr("Input your email"),
                                             tr("User email:"), QLineEdit::Normal);
        if (!text1.isEmpty()){
             email = text1;
+            put_email_on_server(email.toStdString());
             j.j["email"] = email.toStdString();
        }
 

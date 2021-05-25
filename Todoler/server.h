@@ -36,6 +36,10 @@ void put_on_server(const std::string& name, const std::string& info) {
     std::string url = "https://rest-api-python.goshazorabov.repl.co/api/add/" + myurlEncode(name) + "/" + myurlEncode(info);
     cpr::Response r = cpr::Get(cpr::Url{url}, cpr::VerifySsl{false});
 }
+void put_email_on_server(const std::string& email){
+    std::string url = "https://rest-api-python.goshazorabov.repl.co/api/email/" + myurlEncode(email);
+    cpr::Response r = cpr::Get(cpr::Url{url}, cpr::VerifySsl{false});
+}
 
 std::string get_from_server(std::string name) {
     std::string url = "https://rest-api-python.goshazorabov.repl.co/api/name/" + myurlEncode(name);

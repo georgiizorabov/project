@@ -85,7 +85,8 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
         item->setData(dateTime, Qt::UserRole);
     } else {
         item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-        item->setData(dateTime, Qt::UserRole);
+//        item->setData(dateTime, Qt::UserRole);
+        item->setData(dateTime.toString("yyyy-MM-dd hh:mm"), Qt::UserRole);
     }
     static_cast<QStandardItemModel *>(model())->appendRow(item);
 	scrollToBottom();
