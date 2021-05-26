@@ -18,9 +18,7 @@
 #include <stdio.h>
 #include <qlistview.h>
 #include <QtConcurrent/QtConcurrent>
-#define BOOST_NO_CXX11_SCOPED_ENUMS
 #include <boost/filesystem.hpp>
-#undef BOOST_NO_CXX11_SCOPED_ENUMS
 #include <sstream>
 #include <QPushButton>
 #include <filesystem>
@@ -80,30 +78,32 @@ void MainWindow::to_list(MessageList *ml,  MessageList* cl) {
 }
 
 void MainWindow::set_icon(QComboBox* box){
-    for(std::string x : icons){
-        box->addItem(QIcon(QPixmap((":/pix/images/icons/" + x).c_str())),
-                     "");
-    }
+    for (boost::filesystem::recursive_directory_iterator it("../Todoler/images/icons"), end; it != end; ++it) {
+           if (it->path().extension() == ".png") {
+               std::stringstream ss;
+               ss << *it;
+               std::string str = ss.str();
+               std::cout << str.substr(25, str.size() - 26) << std::endl;
+               box->addItem(QIcon(QPixmap((":/pix/images/icons/" + str.substr(25, str.size() - 26)).c_str())),
+                            "");
+           }
+      }
 }
 
 void MainWindow::read_all_icons(){
-    std::vector<std::string> filenames;
-//    qDebug() << boost::filesystem::current_path().string().c_str();
-//    qDebug() << boost::filesystem::path(".").string().c_str();
-        for(boost::filesystem::recursive_directory_iterator rdib(boost::filesystem::path("~")), rdie; rdib != rdie; ++rdib)
-        {
-            filenames.push_back(rdib->path().filename().string());
-        }
-        for(auto const& filename : filenames)
-        {
-            std::cout << filename << '\n';
-        }
+    for (boost::filesystem::recursive_directory_iterator it("../Todoler/images/icons"), end; it != end; ++it) {
+           if (it->path().extension() == ".png") {
+               std::stringstream ss;
+               ss << *it;
+               std::string str = ss.str();
+               std::cout << str.substr(25, str.size() - 26) << std::endl;
+           }
+      }
 }
 
 MainWindow::MainWindow(QWidget *parent) :
 	QWidget(parent)
 {
-    read_all_icons();
     QToolBar* pToolBar = new QToolBar(this);
 	auto *layoutMain = new QVBoxLayout(this);
 	auto *groupAdd = new QGroupBox(tr("Add message"), this);

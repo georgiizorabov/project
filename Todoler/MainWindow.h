@@ -15,10 +15,7 @@ class MainWindow : public QWidget
 private:
     QString username;
     QString email;
-    std::vector<std::string> icons{"information.png",
-                                   "warning.png",
-                                   "error.png"
-                                  };
+    std::vector<std::string> icons{};
 public:
     ToDo_Json j;
     QString get_username() const;
