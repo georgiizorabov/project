@@ -1,6 +1,7 @@
 #include "Delegate.h"
 #include "Delegate_p.h"
 #include <QPainter>
+#include <QDebug>
 
 Delegate::Delegate(QObject *parent) :
 	QStyledItemDelegate(parent),
@@ -100,10 +101,10 @@ void Delegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 	timeStampRect.moveTo(m_ptr->margins.left() + m_ptr->iconSize.width()
 						 + m_ptr->spacingHorizontal, contentRect.top());
 
-	painter->setFont(f);
-	painter->setPen(palette.text().color());
-	painter->drawText(timeStampRect, Qt::TextSingleLine,
-					  index.data(Qt::UserRole).toString());
+    painter->setFont(f);
+    painter->setPen(palette.text().color());
+    painter->drawText(timeStampRect, Qt::TextSingleLine,
+                      index.data(Qt::UserRole).toString());
 
 	// Draw message text
 	QRect messageRect(m_ptr->messageBox(opt));
@@ -113,8 +114,7 @@ void Delegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
 	painter->setFont(opt.font);
 	painter->setPen(palette.windowText().color());
-	painter->drawText(messageRect, Qt::TextSingleLine, opt.text);
-
+    painter->drawText(messageRect, Qt::TextDontClip, opt.text);
 	painter->restore();
 }
 
@@ -125,7 +125,8 @@ QSize Delegate::sizeHint(const QStyleOptionViewItem &option,
 	initStyleOption(&opt, index);
 
 	int textHeight = m_ptr->timestampBox(opt, index).height()
-			+ m_ptr->spacingVertical + m_ptr->messageBox(opt).height();
+            + m_ptr->spacingVertical + m_ptr->messageBox(opt).height() * (opt.text.count('\n')+1);
+    qDebug() << opt.text << '\t' << opt.text.count('\n');
 	int iconHeight = m_ptr->iconSize.height();
 	int h = textHeight > iconHeight ? textHeight : iconHeight;
 

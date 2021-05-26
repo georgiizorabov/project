@@ -73,7 +73,7 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
     auto *item = new QStandardItem(QIcon(pixmap), text);
     if (change_json){
         QString deadline = "";
-//        QDateTime my_date;
+        QDateTime my_date;
 //        while (my_date.isNull()) {
 //            QInputDialog my_dialog;
 //            my_dialog.setMinimumWidth(750);
@@ -82,7 +82,7 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
 //            my_date = QDateTime::fromString(deadline, "yyyy-MM-dd hh:mm");
 //        }
         item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-        item->setData(dateTime, Qt::UserRole);
+        item->setData(dateTime.toString("yyyy-MM-dd hh:mm"), Qt::UserRole);
     } else {
         item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 //        item->setData(dateTime, Qt::UserRole);

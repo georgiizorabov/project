@@ -8,6 +8,8 @@
 #include <QDateTime>
 #include <QToolBar>
 #include <QLabel>
+#include <QLayout>
+#include <QTextEdit>
 #include <QDebug>
 #include <QListView>
 #include <QToolBar>
@@ -80,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     auto *messageList = new MessageList(this);
     auto *CompletedList = new MessageList(this);
 	auto *cmbType = new QComboBox(this);
-	auto *editMessage = new QLineEdit(this);
+    auto *editMessage = new QTextEdit(this);
 	auto *btnPost = new QPushButton(tr("Post"), this);
     auto *btnSendCompleted = new QPushButton(tr("Completed"), this);
     auto *btnDeletePending = new QPushButton(tr("Delete Pending"), this);
@@ -139,7 +141,7 @@ MainWindow::MainWindow(QWidget *parent) :
     resize(640, 480);
     connect(btnPost, &QPushButton::clicked, [messageList, cmbType,
             editMessage, a = this](){
-        messageList->addMessage(editMessage->text(),
+        messageList->addMessage(editMessage->toPlainText(),
 								cmbType->itemIcon(cmbType->currentIndex())
 								.pixmap(48, 48),
                                 QDateTime::currentDateTime(), 0, a);
