@@ -117,7 +117,3 @@ void MessageList::clear_on_index(MainWindow *daddy)
     QFuture<void> future = QtConcurrent::run(first_put_on_server, daddy->get_username().toStdString(), daddy->j.to_str_json());
 
 }
-
-void MessageList::send_to_completed(MainWindow *daddy){
-
-}

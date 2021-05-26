@@ -15,7 +15,6 @@ public slots:
     void addMessage(const QString &text, const QPixmap &pixmap, const QDateTime &dateTime, bool is_c, MainWindow *daddy, bool change_json = true);
     void clear_on_index(MainWindow *daddy);
     void clearAll(MainWindow *daddy);
-    void send_to_completed(MainWindow *daddy);
 };
 
 #endif // MESSAGELIST_H

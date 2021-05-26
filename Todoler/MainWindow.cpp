@@ -14,13 +14,22 @@
 #include <QListView>
 #include <QToolBar>
 #include <QFuture>
+#include <dirent.h>
+#include <stdio.h>
 #include <qlistview.h>
 #include <QtConcurrent/QtConcurrent>
+#define BOOST_NO_CXX11_SCOPED_ENUMS
+#include <boost/filesystem.hpp>
+#undef BOOST_NO_CXX11_SCOPED_ENUMS
+#include <sstream>
 #include <QPushButton>
+#include <filesystem>
+#include <string>
 #include <QBoxLayout>
 #include <iostream>
 #include <QInputDialog>
 #include "server.h"
+#include <QColorDialog>
 #include <cpr/cpr.h>
 
 QString MainWindow::get_username() const {
@@ -70,11 +79,31 @@ void MainWindow::to_list(MessageList *ml,  MessageList* cl) {
     }
 }
 
+void MainWindow::set_icon(QComboBox* box){
+    for(std::string x : icons){
+        box->addItem(QIcon(QPixmap((":/pix/images/icons/" + x).c_str())),
+                     "");
+    }
+}
 
+void MainWindow::read_all_icons(){
+    std::vector<std::string> filenames;
+//    qDebug() << boost::filesystem::current_path().string().c_str();
+//    qDebug() << boost::filesystem::path(".").string().c_str();
+        for(boost::filesystem::recursive_directory_iterator rdib(boost::filesystem::path("~")), rdie; rdib != rdie; ++rdib)
+        {
+            filenames.push_back(rdib->path().filename().string());
+        }
+        for(auto const& filename : filenames)
+        {
+            std::cout << filename << '\n';
+        }
+}
 
 MainWindow::MainWindow(QWidget *parent) :
 	QWidget(parent)
 {
+    read_all_icons();
     QToolBar* pToolBar = new QToolBar(this);
 	auto *layoutMain = new QVBoxLayout(this);
 	auto *groupAdd = new QGroupBox(tr("Add message"), this);
@@ -94,12 +123,13 @@ MainWindow::MainWindow(QWidget *parent) :
             MainWindow::set_username(messageList, CompletedList);
     });
     pToolBar->addAction(get_login);
-    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/information.png")),
-                     "inf");
-    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/warning.png")),
-                     "w");
-    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/error.png")),
-                     "er");
+//    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/information.png")),
+//                     "");
+//    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/warning.png")),
+//                     "");
+//    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/error.png")),
+//                     "");
+    set_icon(cmbType);
 	editMessage->setPlaceholderText(tr("Enter message here..."));
 
     //layoutToolbar->addWidget(pToolBar);
@@ -128,6 +158,8 @@ MainWindow::MainWindow(QWidget *parent) :
                             QPixmap(":/pix/images/icons/error.png"),
                             QDateTime::currentDateTime(), 1, this);
 //    pToolBar->addAction(btnDeletePending);
+    auto *color = new QColorDialog;
+    //layoutMain->addWidget(color);
     layoutMain->addWidget(pToolBar);
 	layoutMain->addWidget(groupAdd);
 	layoutMain->addWidget(messageList);

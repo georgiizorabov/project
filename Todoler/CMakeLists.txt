@@ -71,4 +71,4 @@ if(NOT json_POPULATED)
   add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-target_link_libraries(Todoler PRIVATE Qt${QT_VERSION_MAJOR}::Widgets cpr::cpr nlohmann_json::nlohmann_json)
+target_link_libraries(Todoler PRIVATE Qt${QT_VERSION_MAJOR}::Widgets cpr::cpr nlohmann_json::nlohmann_json boost_filesystem boost_system)
