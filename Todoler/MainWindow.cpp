@@ -149,13 +149,13 @@ MainWindow::MainWindow(QWidget *parent) :
                             QPixmap(":/pix/images/icons/error.png"),
                             QDateTime::currentDateTime(), 0, this);
     CompletedList->addMessage(tr("This is some text of an info message"),
-                            QPixmap(":/pix/images/icons/information.png"),
+                            QPixmap(":/pix/images/icons/ok.png"),
                             QDateTime::currentDateTime(), 1, this);
     CompletedList->addMessage(tr("This is some text of a warning message"),
-                            QPixmap(":/pix/images/icons/warning.png"),
+                            QPixmap(":/pix/images/icons/ok.png"),
                             QDateTime::currentDateTime(), 1, this);
     CompletedList->addMessage(tr("This is some text of an error message"),
-                            QPixmap(":/pix/images/icons/error.png"),
+                            QPixmap(":/pix/images/icons/ok.png"),
                             QDateTime::currentDateTime(), 1, this);
 //    pToolBar->addAction(btnDeletePending);
     auto *color = new QColorDialog;
@@ -182,7 +182,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QModelIndex index = messageList->currentIndex();
         QVariant name = messageList->model()->data(index);
         CompletedList->addMessage(tr(name.toString().toUtf8().constData()),
-                                QPixmap(":/pix/images/icons/error.png"),
+                                QPixmap(":/pix/images/icons/ok.png"),
                                 QDateTime::fromString(index.data(Qt::UserRole).toString().toUtf8().constData(), "yyyy-MM-dd hh:mm"), 1, a);
         messageList->clear_on_index(a);
 

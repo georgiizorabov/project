@@ -1,9 +1,8 @@
 <RCC>
     <qresource prefix="/pix">
-    	<file>images/icons/login.png</file>
-    	<file>images/icons/add.png</file>
-    	<file>images/icons/delete.png</file>
-    	<file>images/icons/error.png</file>
+        <file>images/icons/login.png</file>
+        <file>images/icons/ok.png</file>
+        <file>images/icons/error.png</file>
         <file>images/icons/error.png</file>
         <file>images/icons/information.png</file>
         <file>images/icons/warning.png</file>
