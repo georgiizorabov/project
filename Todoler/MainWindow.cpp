@@ -170,6 +170,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   auto *btnDeadline = new QPushButton(tr("Post with deadline"), this);
   auto *layoutMain = new QVBoxLayout(this);
   auto *groupAdd = new QGroupBox(this);
+  groupAdd->setMaximumHeight(200);
   auto *groupPending = new QGroupBox(this);
   auto *groupCompleted = new QGroupBox(this);
   auto *layoutAddingMessages = new QHBoxLayout(groupAdd);
@@ -181,9 +182,14 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   auto *editMessage = new QTextEdit(this);
   auto *btnPost = new QPushButton(tr("Post without deadline"), this);
   auto *btnSendCompleted = new QPushButton(tr("Completed"), this);
+  auto *btnChangePending = new QPushButton(tr("Change"), this);
   auto *btnDeletePending = new QPushButton(tr("Delete Pending"), this);
+  auto *btnDeleteComleted_index = new QPushButton(tr("Delete Completed"), this);
   auto *btnDeleteComleted = new QPushButton(tr("Delete All Comleted"), this);
 
+  auto *layoutPending_all = new QVBoxLayout();
+  auto *layoutCompleted_all = new QVBoxLayout();
+  auto *layout_all = new QHBoxLayout();
   auto get_login = new QAction(tr("Login"), this);
   auto change_background = new QAction(tr("Background"), this);
   auto get_email = new QAction(tr("Email"), this);
@@ -248,9 +254,12 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   DateTime->setDisplayFormat("yyyy-MM-dd hh:mm");
 
   layoutPending->addWidget(btnDeletePending);
+  layoutPending->addWidget(btnChangePending);
   layoutPending->addWidget(btnSendCompleted);
 
   layoutCompleted->addWidget(btnDeleteComleted);
+  layoutCompleted->addWidget(btnDeleteComleted_index);
+
 
   layoutMessage_left->addWidget(cmbType);
   layoutMessage_left->addWidget(editMessage);
@@ -263,11 +272,13 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   layoutMain->addWidget(menubar);
   // layoutMain->addWidget(pToolBar);
   layoutMain->addWidget(groupAdd);
-  layoutMain->addWidget(messageList);
-  layoutMain->addWidget(groupPending);
-  layoutMain->addWidget(CompletedList);
-  layoutMain->addWidget(groupCompleted);
-
+  layoutPending_all->addWidget(messageList);
+  layoutPending_all->addWidget(groupPending);
+  layoutCompleted_all->addWidget(CompletedList);
+  layoutCompleted_all->addWidget(groupCompleted);
+  layout_all->addLayout(layoutPending_all);
+  layout_all->addLayout(layoutCompleted_all);
+  layoutMain->addLayout(layout_all);
   //    forEach(messageList->model());
 
   resize(640, 480);
@@ -291,6 +302,13 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
                 1, a, false);
             messageList->clear_on_index(a);
           });
+  connect(btnChangePending, &QPushButton::clicked,
+          [DateTime, editMessage, messageList, a = this]() {
+            QModelIndex index = messageList->currentIndex();
+            QVariant name = messageList->model()->data(index);
+            editMessage->setText(name.toString());
+            messageList->clear_on_index(a);
+          });
   connect(btnDeadline, &QPushButton::clicked,
           [messageList, cmbType, DateTime, editMessage, a = this]() {
             messageList->addMessage(
@@ -302,4 +320,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
           [messageList, a = this]() { messageList->clear_on_index(a); });
   connect(btnDeleteComleted, &QPushButton::clicked,
           [CompletedList, a = this]() { CompletedList->clearAll(a); });
+  connect(btnDeleteComleted_index, &QPushButton::clicked,
+          [CompletedList, a = this]() { CompletedList->clear_on_index(a); });
 }

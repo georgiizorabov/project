@@ -68,7 +68,7 @@ void Delegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 											   -m_ptr->margins.right(),
 											   -m_ptr->margins.bottom()));
 	const bool lastIndex = (index.model()->rowCount() - 1) == index.row();
-	const bool hasIcon = !opt.icon.isNull();
+    const bool hasIcon = !opt.icon.isNull();
 	const int bottomEdge = rect.bottom();
 	QFont f(opt.font);
 
@@ -125,7 +125,7 @@ QSize Delegate::sizeHint(const QStyleOptionViewItem &option,
 	initStyleOption(&opt, index);
 
 	int textHeight = m_ptr->timestampBox(opt, index).height()
-            + m_ptr->spacingVertical + m_ptr->messageBox(opt).height() * (opt.text.count('\n')+1);
+            + m_ptr->spacingVertical + m_ptr->messageBox(opt).height() * (5);
     //qDebug() << opt.text << '\t' << opt.text.count('\n');
 	int iconHeight = m_ptr->iconSize.height();
 	int h = textHeight > iconHeight ? textHeight : iconHeight;
