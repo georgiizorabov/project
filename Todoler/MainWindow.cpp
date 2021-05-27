@@ -10,8 +10,10 @@
 #include <QLabel>
 #include <QLayout>
 #include <QTextEdit>
+#include <QCalendarWidget>
 #include <QDebug>
 #include <QListView>
+#include <QDateTimeEdit>
 #include <QStandardItemModel>
 #include <QToolBar>
 #include <QFuture>
@@ -120,15 +122,15 @@ MainWindow::MainWindow(QWidget *parent) :
 	QWidget(parent)
 {
     QToolBar* pToolBar = new QToolBar(this);
-    auto *btnDeadline = new QPushButton(tr("Add deadline"), this);
+    auto *btnDeadline = new QPushButton(tr("Post with deadline"), this);
 	auto *layoutMain = new QVBoxLayout(this);
 	auto *groupAdd = new QGroupBox(tr("Add message"), this);
-	auto *layoutToolbar = new QHBoxLayout(groupAdd);
+    auto *layoutToolbar = new QHBoxLayout(groupAdd);
     auto *messageList = new MessageList(this);
     auto *CompletedList = new MessageList(this);
 	auto *cmbType = new QComboBox(this);
     auto *editMessage = new QTextEdit(this);
-	auto *btnPost = new QPushButton(tr("Post"), this);
+    auto *btnPost = new QPushButton(tr("Post without deadline"), this);
     auto *btnSendCompleted = new QPushButton(tr("Completed"), this);
     auto *btnDeletePending = new QPushButton(tr("Delete Pending"), this);
     auto *btnDeleteComleted = new QPushButton(tr("Delete All Comleted"), this);
@@ -149,9 +151,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	editMessage->setPlaceholderText(tr("Enter message here..."));
 
     //layoutToolbar->addWidget(pToolBar);
-	layoutToolbar->addWidget(cmbType);
-	layoutToolbar->addWidget(editMessage);
-	layoutToolbar->addWidget(btnPost);
 
     qDebug("Row 1 selected");
 
@@ -174,12 +173,19 @@ MainWindow::MainWindow(QWidget *parent) :
                             QPixmap(":/pix/images/icons/ok.png"),
                             QDateTime::currentDateTime(), 1, this, false);
 //    pToolBar->addAction(btnDeletePending);
-    auto *color = new QColorDialog;
-    //layoutMain->addWidget(color);
+    QDateTimeEdit *DateTime = new QDateTimeEdit(QDate::currentDate());
+    DateTime->setMinimumDate(QDate::currentDate().addDays(0));
+    DateTime->setDisplayFormat("yyyy-MM-dd hh:mm");
+
+    layoutToolbar->addWidget(cmbType);
+    layoutToolbar->addWidget(editMessage);
+    layoutToolbar->addWidget(DateTime);
+    layoutToolbar->addWidget(btnDeadline);
+    layoutToolbar->addWidget(btnPost);
+
     layoutMain->addWidget(pToolBar);
 	layoutMain->addWidget(groupAdd);
-	layoutMain->addWidget(messageList);
-    layoutToolbar->addWidget(btnDeadline);
+    layoutMain->addWidget(messageList);
     layoutMain->addWidget(btnDeletePending);
     layoutMain->addWidget(btnSendCompleted);
     layoutMain->addWidget(CompletedList);
@@ -193,7 +199,7 @@ MainWindow::MainWindow(QWidget *parent) :
         messageList->addMessage(editMessage->toPlainText(),
 								cmbType->itemIcon(cmbType->currentIndex())
 								.pixmap(48, 48),
-                                QDateTime::currentDateTime(), 0, a, false);
+                                QDateTime::fromString(""), 0, a, false);
     });
     connect(btnSendCompleted, &QPushButton::clicked, [messageList, CompletedList, a = this](){
         QModelIndex index = messageList->currentIndex();
@@ -204,12 +210,12 @@ MainWindow::MainWindow(QWidget *parent) :
         messageList->clear_on_index(a);
 
     });
-    connect(btnDeadline, &QPushButton::clicked, [messageList, cmbType,
+    connect(btnDeadline, &QPushButton::clicked, [messageList, cmbType, DateTime,
                 editMessage, a = this](){
             messageList->addMessage(editMessage->toPlainText(),
                                     cmbType->itemIcon(cmbType->currentIndex())
                                     .pixmap(48, 48),
-                                    QDateTime::currentDateTime(), 0, a, true);
+                                    DateTime->dateTime(), 0, a, true);
      });
     connect(btnDeletePending, &QPushButton::clicked, [messageList, a = this](){
         messageList->clear_on_index(a);

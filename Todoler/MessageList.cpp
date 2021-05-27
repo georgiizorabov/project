@@ -5,6 +5,7 @@
 #include "json.h"
 #include <QStringListModel>
 #include <QFuture>
+#include <QCalendarWidget>
 #include <QInputDialog>
 #include <QtConcurrent/QtConcurrent>
 #include <QDateTimeEdit>
@@ -77,22 +78,14 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
         QDateTime my_date;
         if(set_deadline){
           QDateTimeEdit *dateEdit = new QDateTimeEdit(QDate::currentDate());
-          dateEdit->setMinimumDate(QDate::currentDate().addDays(0));
-          dateEdit->setFixedSize(500, 500);
-          QFont serifFont("Times", 50, QFont::Bold);
-          dateEdit->setFont(serifFont);
-          dateEdit->setDisplayFormat("yyyy-MM-dd hh:mm");
-          dateEdit->show();
-          my_date = dateEdit->dateTime();
-          qDebug() << my_date.toString();
-//            auto widget=new QCalendarWidget(); //widget is QCalendar pointer
-
-//                ui->verticalLayout->addWidget(widget);
-//                widget->setWindowFlags(Qt::Popup); // we need widget to popup
-
-//                ui->dateEdit->installEventFilter(this);
-//                connect(widget,SIGNAL(clicked(QDate)),ui->dateEdit,SLOT(setDate(QDate)));
-
+//          dateEdit->setMinimumDate(QDate::currentDate().addDays(0));
+//          dateEdit->setFixedSize(500, 500);
+//          QFont serifFont("Times", 50, QFont::Bold);
+//          dateEdit->setFont(serifFont);
+//          dateEdit->setDisplayFormat("yyyy-MM-dd hh:mm");
+//          dateEdit->show();
+//          my_date = dateEdit->dateTime();
+//          qDebug() << my_date.toString();
         }
 //        while (my_date.isNull()) {
 //            QInputDialog my_dialog;
