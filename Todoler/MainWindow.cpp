@@ -124,8 +124,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QToolBar* pToolBar = new QToolBar(this);
     auto *btnDeadline = new QPushButton(tr("Post with deadline"), this);
 	auto *layoutMain = new QVBoxLayout(this);
-	auto *groupAdd = new QGroupBox(tr("Add message"), this);
-    auto *layoutToolbar = new QHBoxLayout(groupAdd);
+    auto *groupAdd = new QGroupBox(tr("Add todo"), this);
+    auto *groupPending = new QGroupBox(this);
+    auto *groupCompleted = new QGroupBox(this);
+    auto *layoutAddingMessages = new QHBoxLayout(groupAdd);
+    auto *layoutPending = new QHBoxLayout(groupPending);
+    auto *layoutCompleted = new QHBoxLayout(groupCompleted);
     auto *messageList = new MessageList(this);
     auto *CompletedList = new MessageList(this);
 	auto *cmbType = new QComboBox(this);
@@ -154,6 +158,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug("Row 1 selected");
 
+    auto *groupMessage_left = new QGroupBox(this);
+    auto *layoutMessage_left = new QHBoxLayout(groupMessage_left);
+    auto *groupMessage_right = new QGroupBox(this);
+    auto *layoutMessage_right = new QVBoxLayout(groupMessage_right);
+
     messageList->addMessage(tr("This is some text of an info message"),
                             QPixmap(":/pix/images/icons/information.png"),
                             QDateTime::currentDateTime(), 0, this, false);
@@ -177,19 +186,25 @@ MainWindow::MainWindow(QWidget *parent) :
     DateTime->setMinimumDate(QDate::currentDate().addDays(0));
     DateTime->setDisplayFormat("yyyy-MM-dd hh:mm");
 
-    layoutToolbar->addWidget(cmbType);
-    layoutToolbar->addWidget(editMessage);
-    layoutToolbar->addWidget(DateTime);
-    layoutToolbar->addWidget(btnDeadline);
-    layoutToolbar->addWidget(btnPost);
+    layoutPending->addWidget(btnDeletePending);
+    layoutPending->addWidget(btnSendCompleted);
+
+    layoutCompleted->addWidget(btnDeleteComleted);
+
+    layoutMessage_left->addWidget(cmbType);
+    layoutMessage_left->addWidget(editMessage);
+    layoutMessage_right->addWidget(DateTime);
+    layoutMessage_right->addWidget(btnDeadline);
+    layoutMessage_right->addWidget(btnPost);
+    layoutAddingMessages->addWidget(groupMessage_left);
+    layoutAddingMessages->addWidget(groupMessage_right);
 
     layoutMain->addWidget(pToolBar);
-	layoutMain->addWidget(groupAdd);
+    layoutMain->addWidget(groupAdd);
     layoutMain->addWidget(messageList);
-    layoutMain->addWidget(btnDeletePending);
-    layoutMain->addWidget(btnSendCompleted);
+    layoutMain->addWidget(groupPending);
     layoutMain->addWidget(CompletedList);
-    layoutMain->addWidget(btnDeleteComleted);
+    layoutMain->addWidget(groupCompleted);
 
 //    forEach(messageList->model());
 
