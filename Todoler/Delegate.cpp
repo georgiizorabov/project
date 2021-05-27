@@ -126,7 +126,7 @@ QSize Delegate::sizeHint(const QStyleOptionViewItem &option,
 
 	int textHeight = m_ptr->timestampBox(opt, index).height()
             + m_ptr->spacingVertical + m_ptr->messageBox(opt).height() * (opt.text.count('\n')+1);
-    qDebug() << opt.text << '\t' << opt.text.count('\n');
+    //qDebug() << opt.text << '\t' << opt.text.count('\n');
 	int iconHeight = m_ptr->iconSize.height();
 	int h = textHeight > iconHeight ? textHeight : iconHeight;
 

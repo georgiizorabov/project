@@ -12,6 +12,7 @@
 #include <QTextEdit>
 #include <QDebug>
 #include <QListView>
+#include <QStandardItemModel>
 #include <QToolBar>
 #include <QFuture>
 #include <dirent.h>
@@ -55,25 +56,39 @@ void MainWindow::set_username(MessageList *ml,  MessageList* cl) {
             j.j["email"] = email.toStdString();
        }
 
-       qDebug() << j.j.dump(4).c_str();
+       //qDebug() << j.j.dump(4).c_str();
 }
 
 void MainWindow::to_list(MessageList *ml,  MessageList* cl) {
+    static_cast<QStandardItemModel *>(ml->model())->clear();
+    static_cast<QStandardItemModel *>(cl->model())->clear();
     for (auto& element : j.j["Progress"].items()) {
         std::string todo = element.value()[0].dump(4);
         std::string date = element.value()[1].dump(4);
-//        qDebug() << todo.substr(1, todo.size() - 2).c_str() << "\t" << date.substr(1, date.size() - 2).c_str();
-        ml->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
+////        qDebug() << todo.substr(1, todo.size() - 2).c_str() << "\t" << date.substr(1, date.size() - 2).c_str();
+        if (date.size() <= 2) {
+            ml->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
+                                QPixmap(":/pix/images/icons/information.png"),
+                                QDateTime::fromString(""), 0, this, false, false);
+        } else {
+            ml->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
                                     QPixmap(":/pix/images/icons/information.png"),
-                                    QDateTime::fromString(date.substr(1, date.size() - 2).c_str(), "yyyy-MM-dd hh:mm"), 0, this, false);
+                                    QDateTime::fromString(date.substr(1, date.size() - 2).c_str(), "yyyy-MM-dd hh:mm"), 0, this, false, false);
+        }
     }
     for (auto& element : j.j["Completed"].items()) {
         std::string todo = element.value()[0].dump(4);
         std::string date = element.value()[1].dump(4);
-//        qDebug() << todo.substr(1, todo.size() - 2).c_str() << "\t" << date.substr(1, date.size() - 2).c_str();
-        cl->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
-                                    QPixmap(":/pix/images/icons/information.png"),
-                                    QDateTime::fromString(date.substr(1, date.size() - 2).c_str(), "yyyy-MM-dd hh:mm"), 1, this, false);
+////        qDebug() << todo.substr(1, todo.size() - 2).c_str() << "\t" << date.substr(1, date.size() - 2).c_str();
+        if (date.size() <= 2) {
+            cl->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
+                                        QPixmap(":/pix/images/icons/ok.png"),
+                           QDateTime::fromString(""), 1, this, false, false);
+        } else {
+            cl->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
+                                        QPixmap(":/pix/images/icons/ok.png"),
+                                        QDateTime::fromString(date.substr(1, date.size() - 2).c_str(), "yyyy-MM-dd hh:mm"), 1, this, false, false);
+        }
     }
 }
 
@@ -105,6 +120,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QWidget(parent)
 {
     QToolBar* pToolBar = new QToolBar(this);
+    auto *btnDeadline = new QPushButton(tr("Add deadline"), this);
 	auto *layoutMain = new QVBoxLayout(this);
 	auto *groupAdd = new QGroupBox(tr("Add message"), this);
 	auto *layoutToolbar = new QHBoxLayout(groupAdd);
@@ -141,28 +157,29 @@ MainWindow::MainWindow(QWidget *parent) :
 
     messageList->addMessage(tr("This is some text of an info message"),
                             QPixmap(":/pix/images/icons/information.png"),
-                            QDateTime::currentDateTime(), 0, this);
+                            QDateTime::currentDateTime(), 0, this, false);
     messageList->addMessage(tr("This is some text of a warning message"),
                             QPixmap(":/pix/images/icons/warning.png"),
-                            QDateTime::currentDateTime(), 0, this);
+                            QDateTime::currentDateTime(), 0, this, false);
     messageList->addMessage(tr("This is some text of an error message"),
                             QPixmap(":/pix/images/icons/error.png"),
-                            QDateTime::currentDateTime(), 0, this);
+                            QDateTime::currentDateTime(), 0, this, false);
     CompletedList->addMessage(tr("This is some text of an info message"),
                             QPixmap(":/pix/images/icons/ok.png"),
-                            QDateTime::currentDateTime(), 1, this);
+                            QDateTime::currentDateTime(), 1, this, false);
     CompletedList->addMessage(tr("This is some text of a warning message"),
                             QPixmap(":/pix/images/icons/ok.png"),
-                            QDateTime::currentDateTime(), 1, this);
+                            QDateTime::currentDateTime(), 1, this, false);
     CompletedList->addMessage(tr("This is some text of an error message"),
                             QPixmap(":/pix/images/icons/ok.png"),
-                            QDateTime::currentDateTime(), 1, this);
+                            QDateTime::currentDateTime(), 1, this, false);
 //    pToolBar->addAction(btnDeletePending);
     auto *color = new QColorDialog;
     //layoutMain->addWidget(color);
     layoutMain->addWidget(pToolBar);
 	layoutMain->addWidget(groupAdd);
 	layoutMain->addWidget(messageList);
+    layoutToolbar->addWidget(btnDeadline);
     layoutMain->addWidget(btnDeletePending);
     layoutMain->addWidget(btnSendCompleted);
     layoutMain->addWidget(CompletedList);
@@ -176,17 +193,24 @@ MainWindow::MainWindow(QWidget *parent) :
         messageList->addMessage(editMessage->toPlainText(),
 								cmbType->itemIcon(cmbType->currentIndex())
 								.pixmap(48, 48),
-                                QDateTime::currentDateTime(), 0, a);
+                                QDateTime::currentDateTime(), 0, a, false);
     });
     connect(btnSendCompleted, &QPushButton::clicked, [messageList, CompletedList, a = this](){
         QModelIndex index = messageList->currentIndex();
         QVariant name = messageList->model()->data(index);
         CompletedList->addMessage(tr(name.toString().toUtf8().constData()),
                                 QPixmap(":/pix/images/icons/ok.png"),
-                                QDateTime::fromString(index.data(Qt::UserRole).toString().toUtf8().constData(), "yyyy-MM-dd hh:mm"), 1, a);
+                                QDateTime::fromString(index.data(Qt::UserRole).toString().toUtf8().constData(), "yyyy-MM-dd hh:mm"), 1, a, false);
         messageList->clear_on_index(a);
 
     });
+    connect(btnDeadline, &QPushButton::clicked, [messageList, cmbType,
+                editMessage, a = this](){
+            messageList->addMessage(editMessage->toPlainText(),
+                                    cmbType->itemIcon(cmbType->currentIndex())
+                                    .pixmap(48, 48),
+                                    QDateTime::currentDateTime(), 0, a, true);
+     });
     connect(btnDeletePending, &QPushButton::clicked, [messageList, a = this](){
         messageList->clear_on_index(a);
     });
