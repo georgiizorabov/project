@@ -1,5 +1,0 @@
-1618859663
-/home/georgii/proj_new/bindings/imgui_impl_glfw.cpp: befc2e6d56d0623ec89748492ed62cd7
-/home/georgii/proj_new/bindings/imgui_impl_glfw.h: 55312572cb20daa960ddc9c5bb9cd61c
-/home/georgii/proj_new/bindings/imgui_impl_opengl2.cpp: e334e66c7da57ef5bbcc18d4aa74591e
-/home/georgii/proj_new/bindings/imgui_impl_opengl2.h: 7edd35e33a7b81a375da5e0d7a75d0e0
