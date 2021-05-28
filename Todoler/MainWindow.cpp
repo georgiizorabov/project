@@ -7,7 +7,6 @@
 #include <QComboBox>
 #include <QDateTime>
 #include <QDateTimeEdit>
-#include <QDebug>
 #include <QFuture>
 #include <QGroupBox>
 #include <QInputDialog>
@@ -66,7 +65,6 @@ void MainWindow::set_username(MessageList *ml, MessageList *cl) {
     j.j["username"] = username.toStdString();
     j.j = json::parse(
         get_from_server(username.toStdString())); //Передть строку из сервера
-    qDebug() << "==============\n" << j.to_str_json().c_str(); // проверка
     to_list(ml, cl);
   }
   if (j.j["email"] == "") { // check if email already exists
@@ -86,7 +84,6 @@ void MainWindow::set_username(MessageList *ml, MessageList *cl) {
       this->setPalette(pal1);
     }
   }
-  // qDebug() << j.j.dump(4).c_str();j.j["background_colour"] = colour.value();
 }
 
 void MainWindow::to_list(MessageList *ml, MessageList *cl) {
@@ -95,8 +92,6 @@ void MainWindow::to_list(MessageList *ml, MessageList *cl) {
   for (auto &element : j.j["Progress"].items()) {
     std::string todo = element.value()[0].dump(4);
     std::string date = element.value()[1].dump(4);
-    ////        qDebug() << todo.substr(1, todo.size() - 2).c_str() << "\t" <<
-    ///date.substr(1, date.size() - 2).c_str();
     if (date.size() <= 2) {
       ml->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
                      QPixmap(":/pix/images/icons/information.png"),
@@ -113,8 +108,6 @@ void MainWindow::to_list(MessageList *ml, MessageList *cl) {
   for (auto &element : j.j["Completed"].items()) {
     std::string todo = element.value()[0].dump(4);
     std::string date = element.value()[1].dump(4);
-    ////        qDebug() << todo.substr(1, todo.size() - 2).c_str() << "\t" <<
-    ///date.substr(1, date.size() - 2).c_str();
     if (date.size() <= 2) {
       cl->addMessage(tr(todo.substr(1, todo.size() - 2).c_str()),
                      QPixmap(":/pix/images/icons/ok.png"),
@@ -139,7 +132,6 @@ void MainWindow::set_icon(QComboBox *box) {
       std::stringstream ss;
       ss << *it;
       std::string str = ss.str();
-      std::cout << str.substr(25, str.size() - 26) << std::endl;
       box->addItem(QIcon(QPixmap(
                        (":/pix/images/icons/" + str.substr(25, str.size() - 26))
                            .c_str())),
@@ -157,7 +149,6 @@ void MainWindow::read_all_icons() {
       std::stringstream ss;
       ss << *it;
       std::string str = ss.str();
-      //   std::cout << str.substr(25, str.size() - 26) << std::endl;
     }
   }
 }
@@ -210,18 +201,9 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   Custom->addAction(change_background);
   menubar->addMenu(User_menu);
   menubar->addMenu(Custom);
-  //    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/information.png")),
-  //                     "");
-  //    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/warning.png")),
-  //                     "");
-  //    cmbType->addItem(QIcon(QPixmap(":/pix/images/icons/error.png")),
-  //                     "");
+
   set_icon(cmbType);
   editMessage->setPlaceholderText(tr("Enter todo here..."));
-
-  // layoutToolbar->addWidget(pToolBar);
-
-  qDebug("Row 1 selected");
 
   auto *groupMessage_left = new QGroupBox(this);
   auto *layoutMessage_left = new QHBoxLayout(groupMessage_left);
@@ -247,7 +229,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   CompletedList->addMessage(tr("Hang out with friends"),
                             QPixmap(":/pix/images/icons/ok.png"),
                             QDateTime::currentDateTime(), 1, this, false);
-  //    pToolBar->addAction(btnDeletePending);
   QDateTimeEdit *DateTime = new QDateTimeEdit(QDate::currentDate());
   DateTime->setMinimumDate(QDate::currentDate().addDays(0));
   DateTime->setMinimumTime(QTime::currentTime());
@@ -260,7 +241,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   layoutCompleted->addWidget(btnDeleteComleted);
   layoutCompleted->addWidget(btnDeleteComleted_index);
 
-
   layoutMessage_left->addWidget(cmbType);
   layoutMessage_left->addWidget(editMessage);
   layoutMessage_right->addWidget(DateTime);
@@ -270,7 +250,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   layoutAddingMessages->addWidget(groupMessage_right);
 
   layoutMain->addWidget(menubar);
-  // layoutMain->addWidget(pToolBar);
   layoutMain->addWidget(groupAdd);
   layoutPending_all->addWidget(messageList);
   layoutPending_all->addWidget(groupPending);
@@ -279,7 +258,6 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
   layout_all->addLayout(layoutPending_all);
   layout_all->addLayout(layoutCompleted_all);
   layoutMain->addLayout(layout_all);
-  //    forEach(messageList->model());
 
   resize(640, 480);
   connect(btnPost, &QPushButton::clicked,
@@ -303,7 +281,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
             messageList->clear_on_index(a);
           });
   connect(btnChangePending, &QPushButton::clicked,
-          [DateTime, editMessage, messageList, a = this]() {
+          [editMessage, messageList, a = this]() {
             QModelIndex index = messageList->currentIndex();
             QVariant name = messageList->model()->data(index);
             editMessage->setText(name.toString());

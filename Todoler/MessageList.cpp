@@ -40,7 +40,6 @@ std::string first_myurlEncode(std::string str) {
 }
 
 void first_put_on_server(const std::string &name, const std::string &info) {
-  qDebug() << "in put on server";
   std::string url = "https://rest-api-python.goshazorabov.repl.co/api/add/" +
                     first_myurlEncode(name) + "/" + first_myurlEncode(info);
   cpr::Response r = cpr::Get(cpr::Url{url}, cpr::VerifySsl{false});
@@ -78,26 +77,6 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
   if (change_json) {
     QString deadline = "";
     QDateTime my_date;
-    if (set_deadline) {
-      QDateTimeEdit *dateEdit = new QDateTimeEdit(QDate::currentDate());
-      //          dateEdit->setMinimumDate(QDate::currentDate().addDays(0));
-      //          dateEdit->setFixedSize(500, 500);
-      //          QFont serifFont("Times", 50, QFont::Bold);
-      //          dateEdit->setFont(serifFont);
-      //          dateEdit->setDisplayFormat("yyyy-MM-dd hh:mm");
-      //          dateEdit->show();
-      //          my_date = dateEdit->dateTime();
-      //          qDebug() << my_date.toString();
-    }
-    //        while (my_date.isNull()) {
-    //            QInputDialog my_dialog;
-    //            my_dialog.setMinimumWidth(750);
-    //            deadline = my_dialog.getText(this, tr("Input deadine in
-    //            format: \"yyyy-MM-dd hh:mm\""),
-    //                                                 tr("Deadline: "),
-    //                                                 QLineEdit::QDateTimeEdit);
-    //            my_date = QDateTime::fromString(deadline, "yyyy-MM-dd hh:mm");
-    //        }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
     item->setData(dateTime.toString("yyyy-MM-dd hh:mm"), Qt::UserRole);
   } else {
@@ -114,7 +93,6 @@ void MessageList::addMessage(const QString &text, const QPixmap &pixmap,
       daddy->j.update_in_progress(this->model());
     }
   }
-  qDebug() << daddy->j.j.dump(4).c_str();
   QFuture<void> future = QtConcurrent::run(first_put_on_server,
                                            daddy->get_username().toStdString(),
                                            daddy->j.to_str_json());
